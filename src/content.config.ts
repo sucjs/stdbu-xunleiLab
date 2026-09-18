@@ -14,7 +14,7 @@ const missions = defineCollection({
     vehicle: z.string(),
     missionWindow: z.string(),
     destination: z.string(),
-    coverImage: z.string().default('/images/mission-article-01.png'),
+    coverImage: z.string().default('/images/lab-research.svg'),
   }),
 });
 
@@ -25,7 +25,7 @@ const reports = defineCollection({
     summary: z.string(),
     label: z.string(),
     publishedAt: z.coerce.date(),
-    image: z.string().default('/images/report-article-01.png'),
+    image: z.string().default('/images/lab-evidence.svg'),
     spectrumBars: z.array(z.number().int().min(0).max(100)).length(12),
     rangeStart: z.string(),
     rangeEnd: z.string(),
@@ -38,11 +38,10 @@ const departures = defineCollection({
   schema: z.object({
     title: z.string(),
     detail: z.string(),
-    launchDate: z.coerce.date(),
-    launchTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d(?::[0-5]\d)?$/),
-    image: z.string().default('/images/departures-article-01.png'),
-    launchSite: z.string(),
-    missionWindow: z.string(),
+    date: z.string(),
+    time: z.string(),
+    image: z.string().default('/images/lab-schedule.svg'),
+    stage: z.string(),
     order: z.number(),
   }),
 });
@@ -55,7 +54,20 @@ const news = defineCollection({
     publishedAt: z.coerce.date(),
     author: z.string(),
     desk: z.string(),
-    image: z.string().default('/images/news-article-01.png'),
+    image: z.string().default('/images/lab-news.svg'),
+  }),
+});
+
+const notes = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/notes' }),
+  schema: z.object({
+    title: z.string(),
+    summary: z.string(),
+    topic: z.string(),
+    level: z.string(),
+    publishedAt: z.coerce.date(),
+    keywords: z.array(z.string()).default([]),
+    order: z.number().default(99),
   }),
 });
 
@@ -65,7 +77,7 @@ const pages = defineCollection({
     title: z.string(),
     summary: z.string(),
     eyebrow: z.string(),
-    image: z.string().default('/images/singleton-about.png'),
+    image: z.string().default('/images/lab-research.svg'),
     highlights: z.array(
       z.object({
         label: z.string(),
@@ -80,5 +92,6 @@ export const collections = {
   reports,
   departures,
   news,
+  notes,
   pages,
 };

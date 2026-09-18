@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" fill="none">
+  <rect width="1200" height="700" fill="#111416"/>
+  <g stroke="#E5E1D8" opacity=".2"><path d="M0 140H1200M0 280H1200M0 420H1200M0 560H1200"/><path d="M140 0V700M280 0V700M420 0V700M560 0V700M700 0V700M840 0V700M980 0V700"/></g>
+  <g stroke="#C9523C" stroke-width="4"><path d="M100 510H290V390H480V450H670V250H860V330H1100"/></g>
+  <g fill="#E5E1D8" font-family="monospace" font-size="22" letter-spacing="3"><text x="80" y="88">THUNDER LAB / FIELD NOTE</text><text x="80" y="630">LEARN · BUILD · COMPETE</text></g>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" fill="none">
+  <rect width="1200" height="900" fill="#121617"/>
+  <g opacity=".18" stroke="#E5E1D8"><path d="M0 150H1200M0 300H1200M0 450H1200M0 600H1200M0 750H1200"/><path d="M150 0V900M300 0V900M450 0V900M600 0V900M750 0V900M900 0V900M1050 0V900"/></g>
+  <g stroke="#E5E1D8" stroke-width="3"><path d="M180 680L320 540L440 590L590 350L760 440L910 230L1040 300"/><path d="M180 720H1040"/><path d="M180 720V180"/></g>
+  <g fill="#C9523C"><circle cx="320" cy="540" r="9"/><circle cx="590" cy="350" r="9"/><circle cx="910" cy="230" r="9"/></g>
+  <text x="72" y="82" fill="#E5E1D8" font-family="monospace" font-size="22" letter-spacing="4">RESEARCH / SIGNAL MAP</text>
+  <text x="180" y="790" fill="#8E9693" font-family="monospace" font-size="18">基础</text><text x="950" y="790" fill="#8E9693" font-family="monospace" font-size="18">进阶</text>
+</svg>

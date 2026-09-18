@@ -3,7 +3,10 @@ import DepartureSection from '../components/DepartureSection';
 import DiscoverySection from '../components/DiscoverySection';
 import FooterSection from '../components/FooterSection';
 import HeroShell from '../components/HeroShell';
+import LabSourcesSection from '../components/LabSourcesSection.astro';
+import LabStorySection from '../components/LabStorySection.astro';
 import MissionsSection from '../components/MissionsSection';
+import NotesSection from '../components/NotesSection.astro';
 import StatsSection from '../components/StatsSection';
 import {
   footerDirectory,
@@ -18,6 +21,7 @@ import {
 import {
   getDepartureEntries,
   getMissionEntries,
+  getNoteEntries,
   getReportEntries,
   toDiscoveryContent,
   toLaunchRow,
@@ -27,17 +31,18 @@ import {
 } from '../lib/content';
 import '../styles/global.css';
 
-const [missionEntries, reportEntries, departureEntries] = await Promise.all([
+const [missionEntries, reportEntries, departureEntries, noteEntries] = await Promise.all([
   getMissionEntries(),
   getReportEntries(),
   getDepartureEntries(),
+  getNoteEntries(),
 ]);
 
 const featuredReport = reportEntries[0];
 const featuredDeparture = departureEntries[0];
 ---
 
-<html lang="en" class="bg-page-bg">
+<html lang="zh-CN" class="bg-page-bg">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -46,26 +51,37 @@ const featuredDeparture = departureEntries[0];
     <meta name="generator" content={Astro.generator} />
     <meta
       name="description"
-      content="AEON Space Agency is a fictional government-backed deep space exploration agency focused on missions, discovery, and next-generation science."
+      content="迅雷实验室是山东工商学院信息与电子工程学院的学生科创实验室，以西校区实验楼 5401 为基地，专注智能车竞赛、电子设计竞赛与嵌入式工程实践。"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Space+Grotesk:wght@300;400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;600;700&display=swap"
     />
     <script is:inline>
       (() => {
-        const key = 'aeon-theme';
+        const key = 'thunder-lab-theme';
         const stored = window.localStorage.getItem(key);
         const theme = stored === 'light' || stored === 'dark' ? stored : 'dark';
         document.documentElement.dataset.theme = theme;
         document.documentElement.classList.toggle('dark', theme === 'dark');
       })();
     </script>
-    <title>AEON Space Agency</title>
+    <noscript>
+      <style>
+        /* 无 JS 时 React 岛屿不会水合，入场动画会永远停在初始态
+           （inline opacity:0），内容就看不见了。这里统一还原成可见。
+           只在 noscript 内生效，正常浏览时不影响动画。 */
+        main *[style*='opacity'] {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      </style>
+    </noscript>
+    <title>迅雷实验室 · 山东工商学院信息与电子工程学院</title>
   </head>
-  <body class="bg-page-bg font-body text-white antialiased">
+  <body class="bg-page-bg antialiased">
     <main class="site-shell overflow-x-clip">
       <HeroShell
         client:load
@@ -75,6 +91,7 @@ const featuredDeparture = departureEntries[0];
         rightNav={heroRightNav}
       />
       <MissionsSection client:visible missions={missionEntries.map(toMissionCard)} />
+      <LabStorySection />
       {featuredReport ? (
         <DiscoverySection
           client:visible
@@ -90,6 +107,8 @@ const featuredDeparture = departureEntries[0];
           launches={departureEntries.map(toLaunchRow)}
         />
       ) : null}
+      <NotesSection notes={noteEntries} />
+      <LabSourcesSection />
       <FooterSection
         client:visible
         directory={footerDirectory}

@@ -1,54 +1,30 @@
 ---
-import { Rocket, Satellite, Star } from 'lucide-react';
-
 import CollectionIndexLayout from '../../layouts/CollectionIndexLayout.astro';
 import { getMissionEntries } from '../../lib/content';
 
 const missions = await getMissionEntries();
-const iconMap = {
-  satellite: Satellite,
-  rocket: Rocket,
-  star: Star,
-};
 ---
 
 <CollectionIndexLayout
-  title="Active Missions"
-  eyebrow="Collection Archive"
-  intro="Browse AEON's live mission slate, review current mission state, and open the full briefing for any active operation."
-  description="Browse every active mission currently tracked by AEON Space Agency."
+  title="研究方向"
+  eyebrow="Research Areas / 01"
+  intro="迅雷实验室围绕智能车、电赛和机器人综合工程建立训练路径，让成员从基础知识进入真实项目。"
+  description="迅雷实验室的研究方向：智能车竞赛、电子设计竞赛与机器人综合工程。"
 >
-  <div class="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-    {missions.map((mission) => {
-      const Icon = iconMap[mission.data.icon];
-      return (
-        <a
-          href={`/missions/${mission.id}/`}
-          class="group flex h-full flex-col border border-white/10 bg-deep-space-card p-7 transition-colors duration-300 hover:border-accent-blue/50"
-        >
-          <div class="flex items-start justify-between gap-6">
-            <Icon className="mt-1 text-white/18" size={28} strokeWidth={1.4} />
-            <span class={`rounded-full px-3 py-1 font-display text-[10px] uppercase tracking-[0.22em] ${mission.data.statusTone === 'green' ? 'bg-emerald-400/10 text-emerald-300' : mission.data.statusTone === 'blue' ? 'bg-accent-blue/14 text-accent-blue' : 'bg-warm-gold/12 text-warm-gold'}`}>
-              {mission.data.status}
-            </span>
-          </div>
-          <h2 class="mt-12 break-words font-display text-[2rem] leading-none text-white">{mission.data.title}</h2>
-          <p class="mt-5 text-[1.02rem] leading-8 text-white/68">{mission.data.summary}</p>
-          <dl class="mt-8 grid gap-4 text-sm text-white/54">
-            <div>
-              <dt class="font-display text-[10px] uppercase tracking-[0.22em] text-accent-blue">Destination</dt>
-              <dd class="mt-2 leading-6">{mission.data.destination}</dd>
-            </div>
-            <div>
-              <dt class="font-display text-[10px] uppercase tracking-[0.22em] text-accent-blue">Vehicle</dt>
-              <dd class="mt-2 leading-6">{mission.data.vehicle}</dd>
-            </div>
-          </dl>
-          <span class="mt-10 inline-flex items-center gap-3 font-display text-[11px] uppercase tracking-[0.24em] text-white/55 transition-colors duration-300 group-hover:text-accent-blue">
-            Open briefing <span aria-hidden="true">→</span>
-          </span>
-        </a>
-      );
-    })}
+  <div class="grid gap-0 border-t border-lab-line">
+    {missions.map((mission, index) => (
+      <a href={`/missions/${mission.id}/`} class="group grid gap-5 border-b border-lab-line py-8 transition-colors duration-300 hover:border-lab-accent md:grid-cols-[80px_minmax(0,1fr)_260px_30px] md:items-center md:gap-8">
+        <span class="font-mono text-sm text-lab-accent">0{index + 1}</span>
+        <div>
+          <h2 class="font-display text-3xl tracking-[-0.04em] text-white transition-colors duration-300 group-hover:text-lab-accent sm:text-4xl">{mission.data.title}</h2>
+          <p class="mt-3 max-w-2xl text-[1.02rem] leading-8 text-white/58">{mission.data.summary}</p>
+        </div>
+        <div class="grid gap-2 font-mono text-[10px] tracking-[0.1em] text-white/42">
+          <span>{mission.data.status}</span>
+          <span>{mission.data.vehicle}</span>
+        </div>
+        <span class="font-mono text-xl text-white/38 transition-all duration-300 group-hover:translate-x-1 group-hover:text-lab-accent" aria-hidden="true">↗</span>
+      </a>
+    ))}
   </div>
 </CollectionIndexLayout>

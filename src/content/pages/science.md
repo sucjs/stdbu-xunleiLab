@@ -1,30 +1,41 @@
 ---
-title: Science Programs
-summary: AEON's science program spans planetary survey, atmospheric analysis, heliophysics, and subsurface exploration, with each campaign designed to produce reusable knowledge for the next wave of missions.
-eyebrow: Science Directorate
-image: /images/singleton-science.png
+title: 培养体系
+summary: 迅雷实验室以赛题和真实项目为牵引，把基础知识、模块训练、团队协作和赛场反馈连接成一条持续迭代的工程学习路径。
+eyebrow: 学习与训练体系
+image: /images/lab-research.svg
 highlights:
-  - label: Focus Areas
-    value: Planetary habitability, heliosphere mapping, cryogenic oceans, and solar event analysis.
-  - label: Method
-    value: Pair every flagship discovery with data pipelines, repeatable instrumentation, and open technical reporting.
-  - label: Output
-    value: Reports, mission briefings, observation archives, and downstream design changes for future launches.
+  - label: 基础训练
+    value: C 语言、STM32 / 51 单片机、模拟与数字电路、焊接、PCB 设计、3D 建模
+  - label: 项目实践
+    value: 智能车、电子设计竞赛、机器人、图像识别与传感网络
+  - label: 培养方式
+    value: 技术授课、师哥师姐传帮带、梯队培养、赛后复盘
 ---
-AEON's scientific work starts with a simple premise: data is only valuable if it changes what the agency can do next. That means research priorities are chosen not only for novelty, but for how well they strengthen mission planning and future discovery.
+迅雷实验室的训练从基础开始，但不以背诵知识点为终点。成员需要把知识放进电路、程序和机械结构中，通过实际测量和不断调试判断方案是否有效。
 
-## Discovery with continuity
+## 从基础到项目
 
-Flagship discoveries attract attention, but the agency is structured to turn those moments into sustained programs. A spectral signature leads to improved instrumentation. A subsurface anomaly shapes the next sampling protocol. A solar event model changes how crewed vehicles are shielded and routed.
+新成员会逐步学习 C 语言、STM32 与 51 单片机、焊接教学、电路板设计、3D 建模等内容。基础课程配合小任务，让大家在较低门槛下尽快得到可运行的结果。
 
-This is how AEON keeps science from becoming disconnected from engineering reality.
+## 以赛促学
 
-## Core disciplines
+实验室依托智能车、电赛和机器人竞赛建立年度训练节奏：
 
-The current science portfolio centers on exoplanet atmospheres, icy moon environments, solar magnetic behavior, and long-baseline observation of the outer system. Each area feeds a different layer of the agency's roadmap, from remote sensing to crew safety to autonomous exploration.
+- **3 月**：启动校内赛，组建梯队；
+- **5 月**：校内赛暨省赛选拔；
+- **7 月**：参加山东赛区比赛；
+- **8 月**：冲击全国总决赛；
+- **寒暑假**：集中备赛，日常以自主学习、焊接调试和算法迭代为主。
 
-The portfolio is intentionally broad, but not unfocused. AEON invests where new knowledge can materially alter its ability to travel farther, observe better, or survive longer.
+比赛提供了明确的问题、时间和评价标准。稳定性、速度、功耗、结构强度和现场排障，都必须经得起检验。
 
-## Publishing and review
+## 传帮带与复盘
 
-Every major campaign is expected to produce public-facing reports and internally actionable technical briefs. That publication rhythm matters. It creates traceability between observation, interpretation, and design decisions, which is critical for any agency operating on long time horizons.
+师哥师姐会带领新成员熟悉工具、代码和设备。学院构建"梯队培养、精准指导"的备赛机制，每个阶段结束后，团队会记录方案、问题和改进方向，把个人经验沉淀成下一次项目可以复用的资料。
+
+## 你会得到什么
+
+- **系统培训**：从零开始上手嵌入式开发；
+- **竞赛指导**：电子设计竞赛、智能车竞赛等；
+- **工程习惯**：设计、制作、测试、复盘，再回到下一次迭代；
+- **团队氛围**：和一群热爱技术的人一起调试、一起庆祝。

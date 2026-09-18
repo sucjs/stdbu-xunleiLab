@@ -1,0 +1,56 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { getNoteEntries, getReadingTimeLabel } from '../../lib/content';
+
+const notes = await getNoteEntries();
+const topics = [...new Set(notes.map((note) => note.data.topic))];
+---
+
+<SiteLayout
+  title="技术专题"
+  description="迅雷实验室的技术笔记：AI 赋能嵌入式、嘉立创 EDA、PID 调参、结构设计等动手经验。"
+>
+  <main class="mx-auto max-w-7xl px-6 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
+    <section class="grid gap-8 border-b border-lab-line pb-12 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:items-end">
+      <div>
+        <p class="font-mono text-[10px] tracking-[0.2em] text-lab-accent">05 / 技术专题</p>
+        <h1 class="mt-5 font-display text-[clamp(3rem,7vw,7rem)] leading-[0.9] tracking-[-0.06em] text-white">技术专题</h1>
+      </div>
+      <p class="max-w-xl text-lg leading-8 text-white/62 md:justify-self-end">
+        这里放的是实验室成员真正踩过坑的笔记：AI 如何落到嵌入式设备上、嘉立创 EDA 怎么从零画到打样、PID 为什么总是调不好、结构件为什么会裂。
+      </p>
+    </section>
+
+    {topics.length ? (
+      <section class="mt-10 flex flex-wrap items-center gap-3">
+        <span class="font-mono text-[10px] tracking-[0.12em] text-white/40">专题方向</span>
+        {topics.map((topic) => (
+          <span class="border border-lab-line px-3 py-1 font-mono text-[10px] tracking-[0.1em] text-white/62">{topic}</span>
+        ))}
+      </section>
+    ) : null}
+
+    <section class="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+      {notes.map((note) => (
+        <a
+          href={`/notes/${note.id}/`}
+          class="group flex h-full flex-col border border-lab-line bg-white/[0.03] p-7 transition-colors duration-300 hover:border-lab-accent sm:p-8"
+        >
+          <div class="flex flex-wrap items-center gap-3 font-mono text-[10px] tracking-[0.12em]">
+            <span class="text-lab-accent">{note.data.topic}</span>
+            <span class="text-white/32">/</span>
+            <span class="text-white/48">{note.data.level}</span>
+          </div>
+          <h2 class="mt-5 font-display text-[1.6rem] leading-[1.15] tracking-[-0.035em] text-white transition-colors duration-300 group-hover:text-lab-accent sm:text-[1.75rem]">
+            {note.data.title}
+          </h2>
+          <p class="mt-4 flex-1 text-[1rem] leading-7 text-white/58">{note.data.summary}</p>
+          <div class="mt-7 flex items-center justify-between border-t border-lab-line pt-4 font-mono text-[10px] tracking-[0.1em] text-white/40">
+            <span>{getReadingTimeLabel(note.body)}</span>
+            <span aria-hidden="true" class="text-lab-accent transition-transform duration-300 group-hover:translate-x-1">↗</span>
+          </div>
+        </a>
+      ))}
+    </section>
+  </main>
+</SiteLayout>

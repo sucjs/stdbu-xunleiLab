@@ -1,0 +1,37 @@
+---
+import { labSources } from '../data/lab';
+---
+
+<section id="sources" class="lab-ground lab-ground-raised">
+  <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+    <div class="flex flex-wrap items-end justify-between gap-4 border-b border-lab-line pb-5">
+      <div>
+        <p class="lab-pad">资料来源</p>
+        <h2 class="mt-4 font-display text-[clamp(1.9rem,3.2vw,2.8rem)] leading-[1.08] tracking-[-0.04em] text-lab-ink">
+          每一条成绩都可以查证。
+        </h2>
+      </div>
+      <p class="font-mono text-[10px] tracking-[0.08em] text-lab-ink/45">链接前往学校官网与开源硬件平台原文</p>
+    </div>
+
+    <ul class="mt-8 grid gap-x-14 md:grid-cols-2">
+      {labSources.map((source) => (
+        <li class="border-b border-lab-line">
+          <a
+            href={source.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group flex items-start justify-between gap-4 py-4 text-[0.94rem] leading-7 text-lab-ink/68 transition-colors duration-300 hover:text-lab-accent"
+          >
+            <span>{source.label}</span>
+            <span aria-hidden="true" class="mt-1 shrink-0 font-mono text-xs text-lab-ink/30 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-lab-accent">↗</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <p class="mt-8 max-w-3xl text-[0.9rem] leading-7 text-lab-ink/50">
+      标注「队史整理」的时间线条目来自实验室内部资料，尚未在学院官网检索到对应报道；其余条目均可通过上面的链接核实。
+    </p>
+  </div>
+</section>

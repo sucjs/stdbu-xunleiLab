@@ -7,30 +7,23 @@ const reports = await getReportEntries();
 ---
 
 <CollectionIndexLayout
-  title="Reports Archive"
-  eyebrow="Collection Archive"
-  intro="Every AEON report is stored as a structured Markdown entry, from flagship discoveries to mission-specific technical briefs."
-  description="Browse all reports and science briefs published by AEON Space Agency."
+  title="项目成果"
+  eyebrow="Project Evidence / 02"
+  intro="把训练、比赛和复盘留下来，形成可以被阅读、被复用、被继续改进的项目档案。"
+  description="浏览迅雷实验室的竞赛成果与工程项目档案。"
 >
   <div class="grid gap-6 lg:grid-cols-2">
     {reports.map((report) => (
-      <a
-        href={`/reports/${report.id}/`}
-        class="group grid overflow-hidden border border-white/10 bg-white/3 transition-colors duration-300 hover:border-accent-blue/50 md:grid-cols-[220px_minmax(0,1fr)]"
-      >
-        <img src={report.data.image} alt={report.data.title} class="aspect-[4/3] h-full w-full object-cover md:aspect-auto" />
+      <a href={`/reports/${report.id}/`} class="group overflow-hidden border border-lab-line bg-white/[0.03] transition-colors duration-300 hover:border-lab-accent">
+        <img src={report.data.image} alt={report.data.title} class="aspect-[4/3] w-full object-cover transition duration-700 group-hover:scale-[1.02]" />
         <div class="p-7 sm:p-8">
-          <div class="flex flex-wrap items-center gap-3 text-sm text-white/48">
-            <span class="font-display text-[10px] uppercase tracking-[0.24em] text-warm-gold">{report.data.label}</span>
-            <span>•</span>
-            <span>{formatLongDate(report.data.publishedAt)}</span>
+          <div class="flex flex-wrap items-center gap-3 font-mono text-[10px] tracking-[0.12em] text-white/42">
+            <span class="text-lab-accent">{report.data.label}</span><span>/</span><span>{formatLongDate(report.data.publishedAt)}</span>
           </div>
-          <h2 class="mt-5 break-words font-display text-[2rem] leading-none text-white">{report.data.title}</h2>
-          <p class="mt-5 text-[1.02rem] leading-8 text-white/68">{report.data.summary}</p>
-          <div class="mt-8 font-display text-[10px] uppercase tracking-[0.24em] text-accent-blue">{report.data.highlight}</div>
-          <span class="mt-8 inline-flex items-center gap-3 font-display text-[11px] uppercase tracking-[0.24em] text-white/55 transition-colors duration-300 group-hover:text-accent-blue">
-            Read report <span aria-hidden="true">→</span>
-          </span>
+          <h2 class="mt-5 font-display text-3xl leading-[1.05] tracking-[-0.04em] text-white sm:text-4xl">{report.data.title}</h2>
+          <p class="mt-5 text-[1.02rem] leading-8 text-white/62">{report.data.summary}</p>
+          <div class="mt-8 border-t border-lab-line pt-4 font-mono text-[10px] tracking-[0.1em] text-lab-accent">{report.data.highlight}</div>
+          <span class="mt-7 inline-flex items-center gap-3 font-mono text-[11px] tracking-[0.12em] text-white/52 transition-colors duration-300 group-hover:text-lab-accent">查看项目档案 <span aria-hidden="true">↗</span></span>
         </div>
       </a>
     ))}

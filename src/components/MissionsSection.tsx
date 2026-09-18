@@ -1,5 +1,5 @@
 import { MotionConfig, motion, useInView } from 'framer-motion';
-import { Activity, ArrowRight, Rocket, Satellite, Star } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { useRef } from 'react';
 
 import type { MissionCardProps } from '../data/site';
@@ -9,47 +9,31 @@ interface MissionsSectionProps {
   missions: MissionCardProps[];
 }
 
-const iconMap = {
-  satellite: Satellite,
-  rocket: Rocket,
-  star: Star,
-} as const;
-
-const statusStyles = {
-  green: 'bg-emerald-400/10 text-emerald-300',
-  blue: 'bg-accent-blue/14 text-accent-blue',
-  gold: 'bg-warm-gold/12 text-warm-gold',
-} as const;
-
-function MissionCard({ description, href, icon, status, statusTone, title, index }: MissionCardProps & { index: number }) {
+function AreaRow({ description, href, status, title, index }: MissionCardProps & { index: number }) {
   const ref = useRef<HTMLElement | null>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.3 });
-  const Icon = iconMap[icon];
+  const isInView = useInView(ref, { once: false, amount: 'some', margin: '0px 0px -8% 0px' });
 
   return (
     <motion.article
       ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-      transition={{ duration: 0.8, delay: index * 0.15, ease: aeonEase }}
-      className="group relative overflow-hidden border border-white/10 bg-deep-space-card p-7 transition-colors duration-300 hover:border-accent-blue/50"
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.6, delay: index * 0.09, ease: aeonEase }}
+      className="group grid gap-4 border-b border-lab-line py-8 transition-colors duration-300 md:grid-cols-[minmax(0,1fr)_170px_28px] md:items-baseline md:gap-8"
     >
-      <div className="absolute inset-x-0 top-0 h-px bg-[linear-gradient(to_right,rgba(74,158,255,0),rgba(74,158,255,0.92),rgba(74,158,255,0))] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-      <div className="flex items-start justify-between gap-6">
-        <Icon className="mt-1 text-white/16" size={28} strokeWidth={1.4} />
-        <span
-          className={`rounded-full px-3 py-1 font-display text-[10px] uppercase tracking-[0.22em] ${statusStyles[statusTone]}`}
-        >
-          {status}
-        </span>
+      <div>
+        <h3 className="font-display text-[1.75rem] leading-tight tracking-[-0.03em] text-white transition-colors duration-300 group-hover:text-lab-accent sm:text-[2.1rem]">
+          {title}
+        </h3>
+        <p className="mt-3 max-w-2xl text-[1rem] leading-7 text-white/60">{description}</p>
       </div>
-      <h3 className="mt-14 break-words font-display text-[2rem] leading-none text-white sm:text-[2.1rem]">{title}</h3>
-      <p className="mt-5 max-w-xs text-[1.05rem] leading-8 text-white/68">{description}</p>
+      <span className="font-mono text-[10px] tracking-[0.08em] text-white/45">{status}</span>
       <a
         href={href}
-        className="mt-12 inline-flex items-center gap-3 font-display text-[11px] uppercase tracking-[0.26em] text-white/58 transition-colors duration-300 hover:text-accent-blue"
+        aria-label={`查看${title}详情`}
+        className="text-white/40 transition-all duration-300 group-hover:translate-x-1 group-hover:text-lab-accent"
       >
-        Mission Brief <ArrowRight size={14} />
+        <ArrowUpRight size={20} strokeWidth={1.4} />
       </a>
     </motion.article>
   );
@@ -58,37 +42,38 @@ function MissionCard({ description, href, icon, status, statusTone, title, index
 export default function MissionsSection({ missions }: MissionsSectionProps) {
   return (
     <MotionConfig reducedMotion="user">
-      <section id="missions" className="bg-section-dark py-20 sm:py-24">
+      <section id="areas" className="lab-ground lab-ground-raised">
         <div className="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={inViewViewport}
             transition={fadeUpTransition}
-            className="flex items-end justify-between gap-6"
+            className="grid gap-8 md:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] md:items-end"
           >
             <div>
-              <div className="flex items-center gap-3 font-display text-[11px] uppercase tracking-[0.26em] text-accent-blue">
-                <Activity size={16} strokeWidth={1.6} />
-                <span>Live Telemetry</span>
-              </div>
-              <h2 className="mt-5 break-words font-display text-[2.85rem] leading-none font-bold text-white sm:text-6xl">
-                Active Missions
+              <p className="lab-pad">研究方向</p>
+              <h2 className="mt-5 max-w-xl font-display text-[clamp(2.6rem,5vw,5rem)] leading-[0.95] tracking-[-0.05em] text-lab-ink">
+                把知识，变成能被验证的工程。
               </h2>
             </div>
-            <a
-              href="/missions/"
-              className="group hidden items-center gap-2 font-display text-[12px] uppercase tracking-[0.24em] text-white/55 transition-colors duration-300 hover:text-white md:inline-flex"
-            >
-              View All <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1" size={16} />
-            </a>
+            <p className="max-w-xl text-[1.05rem] leading-8 text-lab-ink/60 md:justify-self-end">
+              以智能车竞赛、电子设计竞赛为主线，从基础训练进入真实项目。每位成员都要经历设计、焊接、调试和赛场反馈的完整闭环。
+            </p>
           </motion.div>
 
-          <div className="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+          <div className="mt-14 border-t border-lab-line">
             {missions.map((mission, index) => (
-              <MissionCard key={mission.title} index={index} {...mission} />
+              <AreaRow key={mission.title} index={index} {...mission} />
             ))}
           </div>
+
+          <a
+            href="/missions/"
+            className="mt-10 inline-flex items-center gap-3 font-mono text-[11px] tracking-[0.1em] text-lab-ink/60 transition-colors duration-300 hover:text-lab-accent"
+          >
+            查看全部研究方向 <ArrowUpRight size={15} />
+          </a>
         </div>
       </section>
     </MotionConfig>

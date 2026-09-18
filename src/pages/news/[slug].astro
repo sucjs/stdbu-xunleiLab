@@ -1,16 +1,12 @@
 ---
 import { render } from 'astro:content';
-
 import EditorialEntryLayout from '../../layouts/EditorialEntryLayout.astro';
 import { getNewsEntries, getReadingTimeLabel } from '../../lib/content';
 import { formatLongDate } from '../../lib/format';
 
 export async function getStaticPaths() {
   const newsEntries = await getNewsEntries();
-  return newsEntries.map((entry) => ({
-    params: { slug: entry.id },
-    props: { entry },
-  }));
+  return newsEntries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
 }
 
 const { entry } = Astro.props;
@@ -23,12 +19,12 @@ const { Content } = await render(entry);
   summary={entry.data.summary}
   image={entry.data.image}
   backHref="/news/"
-  backLabel="All news"
+  backLabel="返回实验室动态"
   details={[
-    { label: 'Published', value: formatLongDate(entry.data.publishedAt) },
-    { label: 'Reading Time', value: getReadingTimeLabel(entry.body) },
-    { label: 'Author', value: entry.data.author },
-    { label: 'Desk', value: entry.data.desk },
+    { label: '发布日期', value: formatLongDate(entry.data.publishedAt) },
+    { label: '阅读时间', value: getReadingTimeLabel(entry.body) },
+    { label: '发布者', value: entry.data.author },
+    { label: '栏目', value: entry.data.desk },
   ]}
 >
   <Content />

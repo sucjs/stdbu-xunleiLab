@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" fill="none">
+  <rect width="1200" height="900" fill="#171313"/>
+  <g opacity=".2" stroke="#E5E1D8"><path d="M0 150H1200M0 300H1200M0 450H1200M0 600H1200M0 750H1200"/><path d="M150 0V900M300 0V900M450 0V900M600 0V900M750 0V900M900 0V900M1050 0V900"/></g>
+  <g stroke="#E5E1D8" stroke-width="3"><path d="M180 210V700M180 700H1030"/><path d="M180 310H400M180 450H620M180 590H850"/><path d="M400 260V360M620 400V500M850 540V640"/></g>
+  <g fill="#C9523C"><circle cx="400" cy="310" r="12"/><circle cx="620" cy="450" r="12"/><circle cx="850" cy="590" r="12"/></g>
+  <g fill="#E5E1D8" font-family="monospace" font-size="22" letter-spacing="3"><text x="90" y="92">THUNDER LAB / INTAKE PROCESS</text><text x="180" y="800">OPEN CLASS · WRITTEN TEST · INTERVIEW</text></g>
+</svg>

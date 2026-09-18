@@ -1,8 +1,7 @@
 import { Moon, Sun } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
-const THEME_KEY = 'aeon-theme';
-
+const THEME_KEY = 'thunder-lab-theme';
 type ThemeMode = 'dark' | 'light';
 type ThemeToggleVariant = 'hero' | 'shell';
 
@@ -12,17 +11,10 @@ function applyTheme(theme: ThemeMode) {
 }
 
 function getInitialTheme(): ThemeMode {
-  if (typeof document === 'undefined') {
-    return 'dark';
-  }
-
+  if (typeof document === 'undefined') return 'dark';
   const stored = window.localStorage.getItem(THEME_KEY);
-  if (stored === 'dark' || stored === 'light') {
-    return stored;
-  }
-
-  const current = document.documentElement.dataset.theme;
-  return current === 'light' ? 'light' : 'dark';
+  if (stored === 'dark' || stored === 'light') return stored;
+  return document.documentElement.dataset.theme === 'light' ? 'light' : 'dark';
 }
 
 interface ThemeToggleProps {
@@ -47,19 +39,10 @@ export default function ThemeToggle({ className = '', variant = 'shell' }: Theme
   }
 
   const isDark = theme === 'dark';
-  const variantClassName =
-    variant === 'hero'
-      ? 'theme-toggle theme-toggle-hero border border-navy-text/15 bg-page-cream/80 text-navy-text hover:bg-white'
-      : 'theme-toggle theme-toggle-shell border border-white/15 bg-white/10 text-white hover:bg-white/15';
+  const variantClassName = variant === 'hero' ? 'theme-toggle theme-toggle-hero' : 'theme-toggle theme-toggle-shell';
 
   return (
-    <button
-      type="button"
-      aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
-      aria-pressed={isDark}
-      onClick={toggleTheme}
-      className={`inline-flex h-9 w-9 items-center justify-center rounded-full backdrop-blur-sm transition-colors duration-300 ${variantClassName} ${className}`.trim()}
-    >
+    <button type="button" aria-label={`切换至${isDark ? '浅色' : '深色'}模式`} aria-pressed={isDark} onClick={toggleTheme} className={`inline-flex h-10 w-10 items-center justify-center border backdrop-blur-sm transition-colors duration-300 ${variantClassName} ${className}`.trim()}>
       {isDark ? <Moon size={15} strokeWidth={1.8} /> : <Sun size={15} strokeWidth={1.8} />}
     </button>
   );

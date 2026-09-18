@@ -1,46 +1,26 @@
 ---
 import CollectionIndexLayout from '../../layouts/CollectionIndexLayout.astro';
-import { formatLaunchTime, formatLongDate } from '../../lib/format';
 import { getDepartureEntries } from '../../lib/content';
 
 const departures = await getDepartureEntries();
 ---
 
 <CollectionIndexLayout
-  title="Next Departures"
-  eyebrow="Launch Schedule"
-  intro="Track AEON's upcoming departures, launch windows, and outbound payloads. Each item opens the full departure brief."
-  description="Browse the upcoming AEON launch and departure schedule."
+  title="加入我们"
+  eyebrow="Intake Process / 04"
+  intro="公开课、笔试、面试和阶段性考核，帮助你在加入前了解实验室，也帮助团队找到愿意认真做工程的人。"
+  description="了解迅雷实验室的公开课、笔试、面试和阶段性考核流程。"
 >
-  <div class="grid gap-6 lg:grid-cols-2">
-    {departures.map((departure) => (
-      <a
-        href={`/departures/${departure.id}/`}
-        class="group overflow-hidden border border-white/10 bg-white/3 transition-colors duration-300 hover:border-accent-blue/50"
-      >
-        <img src={departure.data.image} alt={departure.data.title} class="aspect-[4/3] w-full object-cover" />
-        <div class="p-7 sm:p-8">
-          <div class="flex flex-wrap items-center gap-3 text-sm text-white/48">
-            <span class="font-display text-[10px] uppercase tracking-[0.24em] text-warm-gold">{formatLongDate(departure.data.launchDate)}</span>
-            <span>•</span>
-            <span>{formatLaunchTime(departure.data.launchTime)}</span>
-          </div>
-          <h2 class="mt-5 break-words font-display text-[2rem] leading-none text-white">{departure.data.title}</h2>
-          <p class="mt-4 text-[1.02rem] text-white/72">{departure.data.detail}</p>
-          <dl class="mt-8 grid gap-4 text-sm text-white/54">
-            <div>
-              <dt class="font-display text-[10px] uppercase tracking-[0.22em] text-accent-blue">Launch Site</dt>
-              <dd class="mt-2 leading-6">{departure.data.launchSite}</dd>
-            </div>
-            <div>
-              <dt class="font-display text-[10px] uppercase tracking-[0.22em] text-accent-blue">Mission Window</dt>
-              <dd class="mt-2 leading-6">{departure.data.missionWindow}</dd>
-            </div>
-          </dl>
-          <span class="mt-8 inline-flex items-center gap-3 font-display text-[11px] uppercase tracking-[0.24em] text-white/55 transition-colors duration-300 group-hover:text-accent-blue">
-            Open launch brief <span aria-hidden="true">→</span>
-          </span>
+  <div class="grid gap-0 border-t border-lab-line">
+    {departures.map((entry, index) => (
+      <a href={`/departures/${entry.id}/`} class="group grid gap-5 border-b border-lab-line py-8 transition-colors duration-300 hover:border-lab-accent md:grid-cols-[80px_minmax(0,1fr)_180px_30px] md:items-center md:gap-8">
+        <span class="font-mono text-sm text-lab-accent">0{index + 1}</span>
+        <div>
+          <h2 class="font-display text-3xl tracking-[-0.04em] text-white transition-colors duration-300 group-hover:text-lab-accent sm:text-4xl">{entry.data.title}</h2>
+          <p class="mt-3 max-w-2xl text-[1.02rem] leading-8 text-white/58">{entry.data.detail}</p>
         </div>
+        <div class="font-mono text-[10px] tracking-[0.1em] text-white/42">{entry.data.date}<br />{entry.data.stage}</div>
+        <span class="font-mono text-xl text-white/38 transition-all duration-300 group-hover:translate-x-1 group-hover:text-lab-accent" aria-hidden="true">↗</span>
       </a>
     ))}
   </div>

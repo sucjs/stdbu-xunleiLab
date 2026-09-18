@@ -1,32 +1,36 @@
 ---
-title: Technology Framework
-summary: AEON's technology portfolio is organized around vehicles, autonomous systems, relay infrastructure, and the industrial discipline needed to support missions that cannot afford brittle hardware.
-eyebrow: Technology
-image: /images/singleton-technology.png
+title: 设备与技术
+summary: 从设计、加工到调试，迅雷实验室提供完成科创项目所需的基础设备与工程环境，让想法可以在桌面上被制作出来。
+eyebrow: 工具与设施
+image: /images/lab-evidence.svg
 highlights:
-  - label: Priority Stack
-    value: Launch vehicles, deep-space relays, autonomous robotics, and hardened sensing systems.
-  - label: Design Principle
-    value: Graceful degradation. Systems must remain useful even when conditions stop being ideal.
-  - label: Deployment Horizon
-    value: 2026-2027 orbital, lunar, Martian, and deep-space missions.
+  - label: 实验室位置
+    value: 西校区实验楼 5401
+  - label: 加工设备
+    value: 3D 打印机、CNC 雕刻机
+  - label: 焊接工具
+    value: 恒温焊台、热风枪、烙铁
+  - label: 测试仪器
+    value: 示波器、直流电源、常用测量仪表
 ---
-AEON develops technology as an operational layer, not a showroom. Every platform must survive long communication delays, partial failures, and mission conditions that cannot be patched in real time.
+实验室配备 3D 打印机、CNC 雕刻机、焊台、热风枪、烙铁、示波器、电源、单片机开发板、智能车车模、传感器模块和电路制版焊接工具，可以支持从结构设计、零件加工到整机调试的完整流程。
 
-## Vehicle architecture
+## 从图纸到实物
 
-Launch systems are designed around modular payload interfaces so the agency can move science, infrastructure, and logistics hardware without rebuilding the full stack for every departure. That speeds up campaign planning and lowers integration risk across consecutive launch windows.
+成员可以先通过 3D 建模验证结构，再使用打印和加工设备制作零件。硬件完成后进入焊接、程序烧录和整机联调阶段。每一个环节都需要记录尺寸、参数和问题，确保项目能够复现和改进。
 
-The same logic shapes orbital insertion modules and transfer stages. AEON prefers architectures that accept multiple mission profiles over highly specialized hardware that only performs well inside one narrow envelope.
+## 技术栈
 
-## Autonomy and robotics
+- **嵌入式**：STM32、51 单片机、MaixPy、底层硬件驱动；
+- **控制算法**：PID 调速、平衡直立控制、路径识别；
+- **硬件**：原理图与 PCB 设计、焊接与制版、传感器与执行器；
+- **感知**：机器视觉、目标检测与嵌入式 AI；
+- **结构**：三维机械设计与仿真、3D 打印与机加工。
 
-Deep-space operations require machines that can interpret degraded signals, navigate uncertainty, and continue useful work when communication with Earth is delayed. AEON's robotics program therefore prioritizes decision support, terrain interpretation, and adaptive sampling rather than decorative autonomy claims.
+## 让工具服务于问题
 
-Autonomy is treated as a risk-management tool. The more effectively a vehicle can stabilize itself and preserve mission intent, the more aggressive the agency can be with distance and duration.
+设备不是展示品，技术也不是标签。我们更关注工具是否能帮助成员把一个具体问题解决掉：让传感器读数更稳定，让车跑得更快，让电路更可靠，让机器人在下一次测试中少出一个故障。
 
-## Relay and observation systems
+## 合作与成长
 
-Communications are mission hardware. AEON's relay architecture is built to extend telemetry confidence, command resiliency, and data continuity across multiple active theaters. The agency pairs that with observation arrays that can validate events, track anomalies, and preserve scientific context over long campaigns.
-
-That combination turns isolated missions into a connected program with shared awareness.
+迅雷实验室与嘉立创集团保持合作，共同关注优秀人才培养和实验室建设。我们也欢迎对嵌入式、电路、结构和机器人感兴趣的同学，在实际项目中找到自己的方向。

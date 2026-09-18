@@ -1,0 +1,70 @@
+---
+import type { NoteEntry } from '../lib/content';
+
+interface Props {
+  notes: NoteEntry[];
+}
+
+const { notes } = Astro.props;
+const [lead, ...rest] = notes;
+---
+
+<section id="notes" class="lab-ground">
+  <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+    <div class="grid gap-8 border-b border-lab-line pb-10 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:items-end">
+      <div>
+        <p class="lab-pad">技术专题</p>
+        <h2 class="mt-5 max-w-xl font-display text-[clamp(2.6rem,5vw,5rem)] leading-[0.95] tracking-[-0.05em] text-lab-ink">
+          我们踩过的坑，写下来。
+        </h2>
+      </div>
+      <p class="max-w-xl text-[1.05rem] leading-8 text-lab-ink/60 md:justify-self-end">
+        AI 怎么落到嵌入式设备上，嘉立创 EDA 从原理图到打样要过几道关，PID 为什么总是调不好。这些都是成员自己整理的笔记。
+      </p>
+    </div>
+
+    {lead ? (
+      <a href={`/notes/${lead.id}/`} class="group mt-14 block border-t border-lab-line pt-8">
+        <div class="grid gap-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-16">
+          <div>
+            <div class="flex flex-wrap items-baseline gap-3 font-mono text-[10px] tracking-[0.08em]">
+              <span class="text-lab-accent">{lead.data.topic}</span>
+              <span class="text-lab-ink/40">{lead.data.level}</span>
+            </div>
+            <h3 class="mt-4 font-display text-[clamp(1.9rem,3.6vw,3.2rem)] leading-[1.06] tracking-[-0.045em] text-lab-ink transition-colors duration-300 group-hover:text-lab-accent">
+              {lead.data.title}
+            </h3>
+          </div>
+          <div class="lg:pt-9">
+            <p class="text-[1.05rem] leading-8 text-lab-ink/62">{lead.data.summary}</p>
+            <span class="mt-6 inline-block font-mono text-[11px] tracking-[0.1em] text-lab-accent">
+              读这篇 <span aria-hidden="true" class="inline-block transition-transform duration-300 group-hover:translate-x-1">↗</span>
+            </span>
+          </div>
+        </div>
+      </a>
+    ) : null}
+
+    <div class="mt-4 border-t border-lab-line">
+      {rest.map((note) => (
+        <a
+          href={`/notes/${note.id}/`}
+          class="group grid gap-3 border-b border-lab-line py-6 md:grid-cols-[150px_minmax(0,1fr)_28px] md:items-baseline md:gap-8"
+        >
+          <span class="font-mono text-[10px] tracking-[0.08em] text-lab-accent">{note.data.topic}</span>
+          <div>
+            <h3 class="font-display text-[1.3rem] leading-snug tracking-[-0.03em] text-lab-ink transition-colors duration-300 group-hover:text-lab-accent">
+              {note.data.title}
+            </h3>
+            <p class="mt-2 max-w-2xl text-[0.98rem] leading-7 text-lab-ink/58">{note.data.summary}</p>
+          </div>
+          <span aria-hidden="true" class="font-mono text-lab-ink/35 transition-all duration-300 group-hover:translate-x-1 group-hover:text-lab-accent">↗</span>
+        </a>
+      ))}
+    </div>
+
+    <a href="/notes/" class="mt-10 inline-flex items-center gap-3 font-mono text-[11px] tracking-[0.1em] text-lab-ink/60 transition-colors duration-300 hover:text-lab-accent">
+      查看全部技术专题 <span aria-hidden="true">↗</span>
+    </a>
+  </div>
+</section>

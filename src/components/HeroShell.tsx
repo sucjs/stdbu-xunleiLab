@@ -1,6 +1,6 @@
 import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
-import { Menu, X } from 'lucide-react';
-import { useState } from 'react';
+import { ArrowDown, Menu, X } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
 import type { HeroContent, NavLink } from '../data/site';
 import BrandLogo from './BrandLogo';
@@ -14,33 +14,50 @@ interface HeroShellProps {
   rightNav: NavLink[];
 }
 
-interface HeroStar {
-  delay: string;
-  duration: string;
-  left: string;
-  size: number;
-  top: string;
-}
+/**
+ * 探针光斑：把指针位置写成 CSS 变量，标题的铜色层由圆形遮罩揭开。
+ * 用 rAF 合并指针事件，避免频繁写样式。
+ * 无指针设备 / 减少动效时直接不启用，由 CSS 兜底显示完整亮度。
+ */
+function useProbeLayer<T extends HTMLElement>() {
+  const ref = useRef<T | null>(null);
 
-const heroStars = createHeroStars();
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.matchMedia('(hover: none)').matches) return;
 
-function createHeroStars(count = 60): HeroStar[] {
-  return Array.from({ length: count }, (_, index) => {
-    const seed = (index + 1) * 19.37;
-    const left = ((Math.sin(seed) + 1) / 2) * 100;
-    const top = 2 + (((Math.cos(seed * 0.73) + 1) / 2) * 21);
-    const size = 1 + (((Math.sin(seed * 1.7) + 1) / 2) > 0.55 ? 1 : 0);
-    const duration = 2 + (((Math.cos(seed * 1.31) + 1) / 2) * 3);
-    const delay = ((Math.sin(seed * 2.1) + 1) / 2) * 3.2;
+    let frame = 0;
+    let pending: { x: number; y: number } | null = null;
 
-    return {
-      left: `${left.toFixed(2)}%`,
-      top: `${top.toFixed(2)}%`,
-      size,
-      duration: `${duration.toFixed(2)}s`,
-      delay: `${delay.toFixed(2)}s`,
+    const apply = () => {
+      frame = 0;
+      if (!pending) return;
+      node.style.setProperty('--probe-x', `${pending.x}px`);
+      node.style.setProperty('--probe-y', `${pending.y}px`);
+      pending = null;
     };
-  });
+
+    const onMove = (event: PointerEvent) => {
+      const rect = node.getBoundingClientRect();
+      pending = { x: event.clientX - rect.left, y: event.clientY - rect.top };
+      node.classList.remove('probe-idle');
+      if (!frame) frame = window.requestAnimationFrame(apply);
+    };
+
+    const onLeave = () => node.classList.add('probe-idle');
+
+    node.addEventListener('pointermove', onMove);
+    node.addEventListener('pointerleave', onLeave);
+    return () => {
+      node.removeEventListener('pointermove', onMove);
+      node.removeEventListener('pointerleave', onLeave);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
+
+  return ref;
 }
 
 export default function HeroShell({
@@ -50,107 +67,76 @@ export default function HeroShell({
   rightNav,
 }: HeroShellProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const orbitalRings = [
-    {
-      size: 'min(55vw, 500px)',
-      borderColor: 'rgba(255, 255, 255, 0.05)',
-    },
-    {
-      size: 'min(38vw, 360px)',
-      borderColor: 'rgba(255, 255, 255, 0.10)',
-    },
-    {
-      size: 'min(24vw, 220px)',
-      borderColor: 'rgba(74, 158, 255, 0.25)',
-    },
-  ];
+  const probeRef = useProbeLayer<HTMLDivElement>();
 
   return (
     <MotionConfig reducedMotion="user">
-      <section className="relative min-h-[100svh] overflow-hidden bg-page-cream">
-        <div
-          className="absolute inset-0 z-0 overflow-hidden bg-dark-space"
-          style={{
-            clipPath: 'polygon(0 0, 100% 0, 100% 10%, 50% 26%, 0 10%)',
-          }}
-        >
-          <img
-            src="/images/top_hero_image.png"
-            alt=""
-            className="hero-sky-image absolute inset-0 h-full w-full object-cover object-top"
-          />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-10%,rgba(74,158,255,0.25),transparent_45%),radial-gradient(circle_at_50%_10%,rgba(255,255,255,0.08),transparent_42%)]" />
+      <section className="lab-hero relative min-h-[100svh] overflow-hidden">
+        <img
+          src="/images/lab-hero.svg"
+          alt=""
+          aria-hidden="true"
+          className="lab-hero-image absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="lab-hero-scrim absolute inset-0" />
+        <div className="lab-hero-grid absolute inset-0" aria-hidden="true" />
 
-          {heroStars.map((star, index) => (
-            <span
-              key={`${star.left}-${star.top}-${index}`}
-              className="hero-star absolute rounded-full bg-white"
-              style={{
-                left: star.left,
-                top: star.top,
-                width: `${star.size}px`,
-                height: `${star.size}px`,
-                animationDuration: star.duration,
-                animationDelay: star.delay,
-              }}
-            />
-          ))}
-
-          {orbitalRings.map((ring) => (
-            <div
-              key={ring.size}
-              className="absolute rounded-full border"
-              style={{
-                left: '50%',
-                top: '8%',
-                width: ring.size,
-                height: ring.size,
-                transform: 'translate(-50%, -50%)',
-                borderColor: ring.borderColor,
-              }}
-            />
-          ))}
-        </div>
-
-        <div className="absolute inset-0 z-10">
-          <div className="absolute inset-x-0 top-0 z-30 flex items-center justify-between px-4 py-4 sm:px-6 sm:py-5 lg:px-8">
-            <a href="/" className="inline-flex w-[138px] items-center transition-opacity duration-300 hover:opacity-80 sm:w-[168px] lg:w-[178px]">
-              <BrandLogo className="w-full" tone="dark" />
+        <div className="relative z-10 flex min-h-[100svh] flex-col px-5 py-5 sm:px-8 lg:px-12">
+          <header className="hero-rise flex items-center justify-between border-b border-white/15 pb-5" style={{ animationDelay: '40ms' }}>
+            <a href="/" className="inline-flex min-h-11 items-center transition-opacity duration-300 hover:opacity-75">
+              <BrandLogo tone="light" className="w-[190px] sm:w-[220px]" />
             </a>
-            <div className="ml-auto flex items-center gap-2 sm:gap-3">
-              <span className="hero-utility-label hidden font-display text-[10px] uppercase tracking-[0.25em] lg:block">
+            <div className="flex items-center gap-3">
+              <span className="hidden font-mono text-[10px] tracking-[0.14em] text-white/50 lg:inline">
                 {content.utilityLabel}
               </span>
               <ThemeToggle variant="hero" />
               <button
                 type="button"
-                className="rounded-full border border-navy-text/15 bg-page-cream/78 p-2 text-navy-text backdrop-blur-sm transition-colors duration-300 hover:bg-white lg:hidden"
+                className="inline-flex h-11 w-11 items-center justify-center border border-white/20 text-white transition-colors duration-300 hover:border-lab-accent hover:text-lab-accent lg:hidden"
                 aria-expanded={isMenuOpen}
                 aria-controls="mobile-navigation"
-                aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+                aria-label={isMenuOpen ? '关闭菜单' : '打开菜单'}
                 onClick={() => setIsMenuOpen((open) => !open)}
               >
-                {isMenuOpen ? <X size={18} strokeWidth={1.5} /> : <Menu size={18} strokeWidth={1.5} />}
+                {isMenuOpen ? <X size={19} strokeWidth={1.5} /> : <Menu size={19} strokeWidth={1.5} />}
               </button>
             </div>
-          </div>
+          </header>
+
+          <nav className="hero-rise hidden items-center justify-between py-5 lg:flex" style={{ animationDelay: '120ms' }} aria-label="主导航">
+              <ul className="flex items-center gap-7 font-mono text-[12px] tracking-[0.06em] text-white/60 xl:gap-10">
+              {leftNav.map((item) => (
+                <li key={item.label}>
+                  <a className="transition-colors duration-300 hover:text-lab-accent" href={item.href}>{item.label}</a>
+                </li>
+              ))}
+            </ul>
+              <ul className="flex items-center gap-7 font-mono text-[12px] tracking-[0.06em] text-white/60 xl:gap-10">
+              {rightNav.map((item) => (
+                <li key={item.label}>
+                  <a className="transition-colors duration-300 hover:text-lab-accent" href={item.href}>{item.label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
           <AnimatePresence>
             {isMenuOpen ? (
               <motion.nav
                 id="mobile-navigation"
-                initial={{ opacity: 0, y: -12 }}
+                initial={{ opacity: 0, y: -10 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.35, ease: aeonEase }}
-                className="absolute inset-x-5 top-18 z-30 rounded-[1.5rem] border border-navy-text/10 bg-[rgba(232,223,200,0.96)] px-5 py-4 shadow-[0_22px_52px_rgba(6,10,18,0.18)] backdrop-blur-sm lg:hidden"
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3, ease: aeonEase }}
+                className="absolute inset-x-5 top-[5.75rem] z-30 border border-white/15 bg-lab-panel/96 p-5 shadow-[0_24px_60px_rgba(0,0,0,0.4)] backdrop-blur-xl sm:inset-x-8 lg:hidden"
               >
-                <ul className="flex flex-col gap-3">
+                <ul className="grid gap-4 font-mono text-[13px] tracking-[0.06em] text-white/72">
                   {mobileNav.map((item) => (
                     <li key={item.label}>
                       <a
                         href={item.href}
-                        className="block font-display text-[11px] uppercase tracking-[0.24em] text-navy-text transition-colors duration-300 hover:text-accent-blue"
+                        className="block border-b border-white/10 pb-3 transition-colors duration-300 hover:text-lab-accent"
                         onClick={() => setIsMenuOpen(false)}
                       >
                         {item.label}
@@ -162,117 +148,71 @@ export default function HeroShell({
             ) : null}
           </AnimatePresence>
 
-          <div
-            className="absolute z-30 hidden lg:block"
-            style={{
-              left: '25%',
-              top: '21%',
-              transform: 'translate(-50%, -50%) rotate(10deg)',
-            }}
-          >
-            <motion.nav
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.75, duration: 0.8, ease: aeonEase }}
-            >
-              <ul className="flex items-center gap-7 font-display text-[11px] uppercase tracking-[0.24em] text-navy-text">
-                {leftNav.map((item, index) => (
-                  <li key={item.label} className="flex items-center gap-7">
-                    <a className="transition-colors duration-300 hover:text-accent-blue" href={item.href}>
-                      {item.label}
-                    </a>
-                    {index < leftNav.length - 1 ? <span className="text-navy-text/35">|</span> : null}
-                  </li>
-                ))}
-              </ul>
-            </motion.nav>
-          </div>
+          <div className="grid flex-1 items-center gap-12 py-16 lg:grid-cols-[minmax(0,1fr)_minmax(240px,0.5fr)] lg:gap-20 lg:py-20">
+            <div className="max-w-4xl">
+              <p className="hero-rise font-mono text-[10px] tracking-[0.16em] text-lab-accent sm:text-xs" style={{ animationDelay: '200ms' }}>
+                {content.eyebrow}
+              </p>
 
-          <div
-            className="absolute z-30 hidden lg:block"
-            style={{
-              left: '75%',
-              top: '21%',
-              transform: 'translate(-50%, -50%) rotate(-10deg)',
-            }}
-          >
-            <motion.nav
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.75, duration: 0.8, ease: aeonEase }}
-            >
-              <ul className="flex items-center gap-7 font-display text-[11px] uppercase tracking-[0.24em] text-navy-text">
-                {rightNav.map((item, index) => (
-                  <li key={item.label} className="flex items-center gap-7">
-                    <a className="transition-colors duration-300 hover:text-accent-blue" href={item.href}>
-                      {item.label}
-                    </a>
-                    {index < rightNav.length - 1 ? <span className="text-navy-text/35">|</span> : null}
-                  </li>
-                ))}
-              </ul>
-            </motion.nav>
-          </div>
-
-          <div className="absolute left-1/2 top-[23%] z-20 -translate-x-1/2 -translate-y-1/2 sm:top-[24%] md:top-[25%] lg:top-[26%]">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.7 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.4, duration: 0.85, ease: aeonEase }}
-              className="relative flex h-[84px] w-[84px] items-center justify-center rounded-full bg-white shadow-[0_16px_48px_rgba(0,0,0,0.35)] sm:h-[110px] sm:w-[110px] lg:h-[136px] lg:w-[136px]"
-            >
-              <BrandLogo kind="symbol" className="w-[76%]" tone="light" />
-            </motion.div>
-          </div>
-
-          <div className="absolute inset-x-0 bottom-0 z-20 flex flex-col items-center justify-center px-6 pb-10 pt-[9.5rem] text-center sm:px-8 sm:pb-14 sm:pt-[12rem] md:pt-[14rem] lg:pb-16 lg:pt-[18rem]">
-            <motion.h2
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5, duration: 0.9, ease: aeonEase }}
-              className="max-w-[11ch] font-display text-[1.65rem] leading-[0.92] font-bold uppercase tracking-[0.03em] text-navy-text sm:max-w-none sm:text-[2.5rem] md:text-[3.35rem] lg:text-[5.5rem]"
-            >
-              <span className="block">{content.eyebrow}</span>
-              <span className="mt-3 block bg-[linear-gradient(to_right,#1a5fa0,#8b6532)] bg-clip-text text-transparent">
-                AN ILLUSION
-              </span>
-            </motion.h2>
-
-            <motion.p
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.65, duration: 0.9, ease: aeonEase }}
-              className="text-balance mt-5 max-w-md text-[0.98rem] font-light leading-7 text-muted-navy/75 sm:mt-6 sm:max-w-2xl sm:text-[1.04rem] sm:leading-8 md:max-w-3xl md:text-[1.08rem]"
-            >
-              {content.paragraph}
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8, duration: 0.85, ease: aeonEase }}
-              className="mt-8 flex w-full max-w-xl flex-col gap-3 sm:mt-9 sm:flex-row sm:justify-center"
-            >
-              <a
-                href={content.primaryCta.href}
-                className="inline-flex min-h-12 items-center justify-center bg-navy-text px-8 font-display text-[10px] uppercase tracking-[0.22em] text-page-cream transition-colors duration-300 hover:bg-accent-blue"
+              {/* 鼠标划过时，被"探针"点亮的那一行 */}
+              <div
+                ref={probeRef}
+                className="probe-stack probe-idle hero-rise mt-6"
+                style={{ animationDelay: '280ms' }}
               >
-                {content.primaryCta.label}
-              </a>
-              <a
-                href={content.secondaryCta.href}
-                className="inline-flex min-h-12 items-center justify-center border border-navy-text/35 px-8 font-display text-[10px] uppercase tracking-[0.22em] text-navy-text transition-colors duration-300 hover:border-accent-blue hover:text-accent-blue"
-              >
-                {content.secondaryCta.label}
-              </a>
-            </motion.div>
+                <h1 className="font-display text-[clamp(3.2rem,8.5vw,9rem)] leading-[0.9] tracking-[-0.06em]">
+                  <span className="probe-layer probe-dim">{content.title}</span>
+                  <span className="probe-layer probe-lit" aria-hidden="true">{content.title}</span>
+                </h1>
+              </div>
 
-            <motion.div
-              initial={{ opacity: 0, scaleY: 0 }}
-              animate={{ opacity: 1, scaleY: 1 }}
-              transition={{ delay: 1.1, duration: 0.8, ease: aeonEase }}
-              className="mt-8 hidden h-8 w-px origin-top bg-[linear-gradient(to_bottom,rgba(26,46,66,0.4),rgba(26,46,66,0))] 2xl:block"
-            />
+              <p
+                className="hero-rise mt-8 max-w-2xl text-[1.05rem] leading-8 text-white/68 sm:text-[1.14rem] sm:leading-9"
+                style={{ animationDelay: '400ms' }}
+              >
+                {content.paragraph}
+              </p>
+
+              <div className="hero-rise mt-10 flex flex-col gap-3 sm:flex-row" style={{ animationDelay: '500ms' }}>
+                <a
+                  href={content.primaryCta.href}
+                  className="hero-cta inline-flex min-h-12 items-center justify-center px-7 font-mono text-[11px] tracking-[0.1em]"
+                >
+                  {content.primaryCta.label}
+                </a>
+                <a
+                  href={content.secondaryCta.href}
+                  className="inline-flex min-h-12 items-center justify-center border border-white/25 px-7 font-mono text-[11px] tracking-[0.1em] text-white transition-colors duration-300 hover:border-lab-accent hover:text-lab-accent"
+                >
+                  {content.secondaryCta.label}
+                </a>
+              </div>
+            </div>
+
+            <aside className="hero-rise hidden justify-self-end lg:block lg:w-full" style={{ animationDelay: '580ms' }}>
+              <div className="lab-waveform h-16" aria-hidden="true" />
+              <dl className="mt-7 grid gap-4 font-mono text-[11px]">
+                <div className="flex items-baseline justify-between gap-4 border-b border-white/12 pb-3">
+                  <dt className="text-white/40">实验室</dt>
+                  <dd className="text-white/86">西校区 5401</dd>
+                </div>
+                <div className="flex items-baseline justify-between gap-4 border-b border-white/12 pb-3">
+                  <dt className="text-white/40">归属</dt>
+                  <dd className="text-white/86">信电学院</dd>
+                </div>
+                <div className="flex items-baseline justify-between gap-4">
+                  <dt className="text-white/40">起于</dt>
+                  <dd className="text-white/86">2010</dd>
+                </div>
+              </dl>
+            </aside>
+          </div>
+
+          <div className="hero-rise flex items-end justify-between border-t border-white/15 pt-5 font-mono text-[10px] tracking-[0.14em] text-white/40" style={{ animationDelay: '660ms' }}>
+            <span>迅雷实验室</span>
+            <a href="#areas" className="group inline-flex items-center gap-2 transition-colors duration-300 hover:text-lab-accent">
+              向下看 <ArrowDown size={14} className="transition-transform duration-300 group-hover:translate-y-1" />
+            </a>
           </div>
         </div>
       </section>

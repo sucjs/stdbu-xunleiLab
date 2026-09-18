@@ -1,30 +1,42 @@
 ---
-title: About AEON
-summary: AEON is a fictional government-backed deep space exploration agency built around disciplined engineering, long-range science, and the infrastructure required to keep ambitious missions alive far from Earth.
-eyebrow: Agency Profile
-image: /images/singleton-about.png
+title: 关于迅雷实验室
+summary: 迅雷实验室是山东工商学院信息与电子工程学院的学生科创开放实验室，房间为西校区实验楼 5401，专注智能控制与电子系统开发。
+eyebrow: 实验室介绍
+image: /images/lab-hero.svg
 highlights:
-  - label: Mandate
-    value: Expand human reach beyond the heliosphere through sustained exploration and systems infrastructure.
-  - label: Operating Model
-    value: Publicly funded, mission-first, with long-horizon science and logistics treated as one continuous program.
-  - label: Established
-    value: '2024'
+  - label: 所属单位
+    value: 山东工商学院信息与电子工程学院
+  - label: 实验室位置
+    value: 西校区实验楼 5401
+  - label: 核心竞赛
+    value: 全国大学生智能汽车竞赛、全国大学生电子设计竞赛
+  - label: 命名由来
+    value: 源自学校最早的智能车参赛队伍"迅雷队"
 ---
-AEON was founded to solve a practical problem disguised as a philosophical one: if humanity intends to travel farther, it needs institutions that can think farther. Deep space exploration is not only about singular launches or headline discoveries. It is about maintaining capability across decades, distances, and uncertain conditions.
+迅雷实验室不只是一个放置设备的房间，更是一群人围绕同一个目标持续做事的实践平台。我们从一行 C 语言代码、一块电路板和一次没有跑通的调试开始，把课堂知识转化为可以测量、可以修改、可以在赛场上验证的工程成果。
 
-## What AEON is built to do
+## 名字从哪里来
 
-The agency combines mission operations, advanced systems research, launch coordination, scientific analysis, and long-duration logistics under one command structure. That model keeps discovery tied to infrastructure. It also prevents exploratory missions from becoming isolated demonstrations that cannot scale into durable programs.
+"迅雷"这个名字来自山东工商学院最早的智能车参赛队伍——迅雷队。车队最早在东校区信电学院的普通电子实验室里做智能车，没有独立房间。2019 年西校区实验楼建成、2020 年院系实验室搬迁后，独立的科创实验室正式定名"迅雷实验室"，房间为西校区实验楼 5401。
 
-AEON treats every mission as part of a larger lattice. A probe, a habitat, a relay array, and a launch vehicle are all pieces of the same operating system.
 
-## Institutional approach
 
-Public accountability matters to the agency's identity. AEON publishes science reports, operational summaries, and mission briefs so that each advance can be understood in context rather than reduced to spectacle. The goal is to build legitimacy through rigor and transparency.
+## 我们是谁
 
-That discipline extends inward as well. Mission planning is intentionally conservative at the systems level so the agency can be ambitious at the exploration level.
+实验室属于学生科创开放实验室，不是课程教学实验室，面向信电学院、自动化、电气工程、电子信息等专业本科生开放，以嵌入式、自动控制、机器人、智能车硬件开发为主线。
 
-## Long-range view
+实验室由成员自主运营，实验室内部事务由成员自己决断，并持续改进培训流程与培养方案。我们始终坚持三条原则：
 
-AEON's long-term work focuses on three fronts: resilient communications, autonomous science in remote environments, and the logistics needed to keep human and robotic missions moving together. The agency believes the next era of exploration belongs to organizations that can sustain presence, not just reach it once.
+1. 不做任何水赛；
+2. 不接受比赛挂名；
+3. 不接受靠关系进入实验室。
+
+## 我们如何培养成员
+
+实验室采用公开课、笔试、面试和阶段性考核的流程。进入实验室后，成员会从 C 语言、STM32、焊接和基础电路开始，逐步参与智能车、电赛或机器人项目。
+
+我们鼓励大一成员尽早参加比赛，同时也尊重每个人在大三、大四阶段对考研、就业和继续参赛的选择。
+
+## 合作与支持
+
+实验室与嘉立创集团保持合作，在器件、平台及技术层面获得支持，共同致力于优秀人才培养与实验室建设。

@@ -1,9 +1,8 @@
 import { MotionConfig, motion, useInView } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import { useRef } from 'react';
 
 import type { LaunchRowProps, NextDepartureContent } from '../data/site';
-import LaunchCountdown from './LaunchCountdown';
 import { aeonEase, fadeUpTransition, inViewViewport } from './motion';
 
 interface DepartureSectionProps {
@@ -11,29 +10,30 @@ interface DepartureSectionProps {
   launches: LaunchRowProps[];
 }
 
-function LaunchRow({ date, detail, href, index, time, title }: LaunchRowProps & { index: number }) {
+function IntakeStep({ date, detail, href, index, time, title }: LaunchRowProps & { index: number }) {
   const ref = useRef<HTMLAnchorElement | null>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.5 });
+  const isInView = useInView(ref, { once: false, amount: 'some', margin: '0px 0px -8% 0px' });
 
   return (
     <motion.a
       ref={ref}
       href={href}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
-      transition={{ duration: 0.78, delay: index * 0.14, ease: aeonEase }}
-      className="group -mx-4 grid gap-4 border-b border-white/10 px-4 py-6 transition-colors duration-300 hover:border-accent-blue/45 hover:bg-white/[0.04] md:grid-cols-[180px_minmax(0,1fr)] md:gap-6"
+      initial={{ opacity: 0, y: 18 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
+      transition={{ duration: 0.6, delay: index * 0.08, ease: aeonEase }}
+      className="group grid gap-3 border-b border-lab-line py-6 transition-colors duration-300 md:grid-cols-[110px_minmax(0,1fr)_28px] md:items-baseline md:gap-8"
     >
+      <span className="font-mono text-[10px] tracking-[0.08em] text-lab-accent">{date}</span>
       <div>
-        <div className="font-display text-[1rem] uppercase tracking-[0.18em] text-warm-gold transition-colors duration-300 group-hover:text-accent-blue sm:text-[1.05rem]">{date}</div>
-        <div className="departure-meta mt-2 text-sm uppercase tracking-[0.22em] transition-colors duration-300 group-hover:text-white/72">{time}</div>
-      </div>
-      <div>
-        <h3 className="departure-title break-words font-display text-[1.8rem] leading-none transition-colors duration-300 group-hover:text-accent-blue sm:text-[2.2rem]">
+        <h3 className="font-display text-[1.4rem] leading-tight tracking-[-0.03em] text-white transition-colors duration-300 group-hover:text-lab-accent sm:text-[1.6rem]">
           {title}
         </h3>
-        <p className="departure-copy mt-3 text-[1.02rem] transition-colors duration-300 group-hover:text-white/82 sm:text-[1.05rem]">{detail}</p>
+        <p className="mt-2 max-w-2xl text-[0.98rem] leading-7 text-white/58">{detail}</p>
+        <span className="mt-2 inline-block font-mono text-[10px] tracking-[0.08em] text-white/40">{time}</span>
       </div>
+      <span aria-hidden="true" className="font-mono text-white/35 transition-all duration-300 group-hover:translate-x-1 group-hover:text-lab-accent">
+        <ArrowUpRight size={19} strokeWidth={1.4} />
+      </span>
     </motion.a>
   );
 }
@@ -41,54 +41,39 @@ function LaunchRow({ date, detail, href, index, time, title }: LaunchRowProps & 
 export default function DepartureSection({ content, launches }: DepartureSectionProps) {
   return (
     <MotionConfig reducedMotion="user">
-      <section id="technology" className="departure-surface py-20 sm:py-24">
-        <div className="mx-auto grid max-w-7xl gap-10 px-6 sm:px-8 lg:grid-cols-[minmax(320px,1.05fr)_minmax(0,1fr)] lg:items-center lg:gap-12 lg:px-12">
+      <section id="join" className="lab-ground lab-ground-raised">
+        <div className="mx-auto grid max-w-7xl gap-12 px-6 sm:px-8 lg:grid-cols-[minmax(300px,0.72fr)_minmax(0,1.28fr)] lg:items-start lg:gap-20 lg:px-12">
           <motion.div
-            initial={{ opacity: 0, x: -48 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={inViewViewport}
             transition={fadeUpTransition}
-            className="group relative overflow-hidden"
           >
-            <div className="relative aspect-[4/3] overflow-hidden">
-              <img
-                src={content.image}
-                alt="Featured launch window"
-                className="h-full w-full object-cover grayscale transition duration-700 group-hover:grayscale-0"
-              />
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_15%,rgba(255,255,255,0.08),transparent_45%)]" />
-              <div className="departure-countdown-panel absolute bottom-4 left-4 border border-white/15 px-4 py-4 backdrop-blur-md sm:bottom-6 sm:left-6 sm:px-6 sm:py-5">
-                <div className="departure-meta font-display text-[10px] uppercase tracking-[0.24em]">{content.label}</div>
-                <LaunchCountdown
-                  launchDate={content.launchDate}
-                  launchTime={content.launchTime}
-                  className="departure-title mt-3 block font-display text-[1.9rem] leading-none sm:text-[3rem]"
-                />
-              </div>
-            </div>
+            <p className="lab-pad">{content.label}</p>
+            <h2 className="mt-5 font-display text-[clamp(2.6rem,5vw,5rem)] leading-[0.95] tracking-[-0.05em] text-white">
+              {content.title}
+            </h2>
+            <p className="mt-6 max-w-lg text-[1.05rem] leading-8 text-white/62">
+              公开课、笔试、面试、阶段培训，一共四步。我们想看的是你愿不愿意把一件事做完，而不是你现在会多少。
+            </p>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 48 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={inViewViewport}
             transition={fadeUpTransition}
+            className="border-t border-lab-line"
           >
-            <div>
-              <a
-                href={content.allHref}
-                className="departure-meta group mb-5 hidden items-center gap-2 font-display text-[12px] uppercase tracking-[0.24em] transition-colors duration-300 hover:text-white md:inline-flex"
-              >
-                View Schedule
-                <ArrowRight className="transition-transform duration-300 group-hover:translate-x-1" size={16} />
-              </a>
-              <h2 className="departure-title break-words font-display text-4xl leading-none font-bold sm:text-6xl">{content.title}</h2>
-            </div>
-            <div className="mt-8">
-              {launches.map((launch, index) => (
-                <LaunchRow key={`${launch.date}-${launch.title}`} index={index} {...launch} />
-              ))}
-            </div>
+            {launches.map((launch, index) => (
+              <IntakeStep key={`${launch.date}-${launch.title}`} index={index} {...launch} />
+            ))}
+            <a
+              href={content.allHref}
+              className="mt-8 inline-flex items-center gap-3 font-mono text-[11px] tracking-[0.1em] text-white/58 transition-colors duration-300 hover:text-lab-accent"
+            >
+              查看完整招新流程 <ArrowUpRight size={15} />
+            </a>
           </motion.div>
         </div>
       </section>

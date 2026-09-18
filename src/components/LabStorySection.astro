@@ -1,0 +1,75 @@
+---
+import { labFacilities, labMentors, labTimeline } from '../data/lab';
+---
+
+<section id="story" class="lab-ground">
+  <div class="mx-auto max-w-7xl px-6 sm:px-8 lg:px-12">
+    <div class="grid gap-8 border-b border-lab-line pb-10 md:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] md:items-end">
+      <div>
+        <p class="lab-pad">实验室沿革</p>
+        <h2 class="mt-5 max-w-xl font-display text-[clamp(2.6rem,5vw,5rem)] leading-[0.95] tracking-[-0.05em] text-lab-ink">
+          从一支车队，到一间实验室。
+        </h2>
+      </div>
+      <p class="max-w-xl text-[1.05rem] leading-8 text-lab-ink/60 md:justify-self-end">
+        「迅雷」这个名字来自山东工商学院最早的智能车参赛队伍。十余年里，它从东校区一间普通电子实验室里的几张桌子，变成西校区实验楼 5401 的独立空间。
+      </p>
+    </div>
+
+    <ol class="lab-trace mt-14">
+      {labTimeline.map((item) => (
+        <li class="grid gap-3 border-b border-lab-line py-6 md:grid-cols-[96px_minmax(0,1fr)] md:gap-8">
+          <div class="font-mono text-[1.02rem] text-lab-accent">{item.year}</div>
+          <div>
+            <div class="flex flex-wrap items-baseline gap-3">
+              <h3 class="font-display text-[1.45rem] tracking-[-0.03em] text-lab-ink sm:text-[1.65rem]">{item.title}</h3>
+              <span class="font-mono text-[9px] tracking-[0.08em] text-lab-ink/40">
+                {item.verified ? '官网可查' : '队史整理'}
+              </span>
+            </div>
+            <p class="mt-2 max-w-2xl text-[0.98rem] leading-7 text-lab-ink/60">{item.detail}</p>
+          </div>
+        </li>
+      ))}
+    </ol>
+
+    <div class="mt-20 grid gap-14 lg:grid-cols-2 lg:gap-20">
+      <div>
+        <p class="lab-pad">指导老师</p>
+        <h3 class="mt-4 font-display text-[clamp(1.8rem,3vw,2.4rem)] leading-[1.08] tracking-[-0.04em] text-lab-ink">
+          带我们从第一块电路板走到国赛。
+        </h3>
+        <dl class="mt-8 border-t border-lab-line">
+          {labMentors.map((mentor) => (
+            <div class="border-b border-lab-line py-5">
+              <dt class="flex flex-wrap items-baseline gap-3">
+                <span class="font-display text-[1.25rem] tracking-[-0.02em] text-lab-ink">{mentor.name}</span>
+                <span class="font-mono text-[10px] tracking-[0.08em] text-lab-accent">{mentor.role}</span>
+              </dt>
+              <dd class="mt-2 text-[0.95rem] leading-7 text-lab-ink/58">{mentor.note}</dd>
+            </div>
+          ))}
+        </dl>
+        <p class="mt-5 font-mono text-[10px] leading-6 text-lab-ink/45">成员名单与分工待补充。</p>
+      </div>
+
+      <div>
+        <p class="lab-pad">空间与设备</p>
+        <h3 class="mt-4 font-display text-[clamp(1.8rem,3vw,2.4rem)] leading-[1.08] tracking-[-0.04em] text-lab-ink">
+          测量、焊接、重复试验，都在这里发生。
+        </h3>
+        <dl class="mt-8 grid gap-x-8 gap-y-5 sm:grid-cols-2">
+          {labFacilities.map((item) => (
+            <div class="border-t border-lab-line pt-4">
+              <dt class="font-mono text-[10px] tracking-[0.08em] text-lab-ink/45">{item.label}</dt>
+              <dd class="mt-2 text-[1rem] leading-7 text-lab-ink/72">{item.value}</dd>
+            </div>
+          ))}
+        </dl>
+        <p class="mt-6 max-w-lg text-[0.98rem] leading-7 text-lab-ink/55">
+          实验室面向信电学院、自动化、电气工程、电子信息等专业本科生开放，属于学生科创开放实验室，不是课程教学实验室。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

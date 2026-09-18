@@ -10,29 +10,22 @@ interface Props {
   title: string;
 }
 
-const { description = 'AEON Space Agency content archive.', title } = Astro.props;
+const { description = '迅雷实验室 · 山东工商学院科创竞赛实践平台', title } = Astro.props;
 const currentPath = Astro.url.pathname.endsWith('/') ? Astro.url.pathname : `${Astro.url.pathname}/`;
 
 function normalizePath(path: string) {
-  if (path === '/') {
-    return '/';
-  }
-
+  if (path === '/') return '/';
   return path.endsWith('/') ? path : `${path}/`;
 }
 
 function isActivePath(path: string) {
   const normalizedPath = normalizePath(path);
-
-  if (normalizedPath === '/') {
-    return currentPath === '/';
-  }
-
+  if (normalizedPath === '/') return currentPath === '/';
   return currentPath === normalizedPath || currentPath.startsWith(normalizedPath);
 }
 ---
 
-<html lang="en" class="bg-page-bg">
+<html lang="zh-CN" class="bg-page-bg">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -44,11 +37,11 @@ function isActivePath(path: string) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800;900&family=Space+Grotesk:wght@300;400;500;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;600;700&display=swap"
     />
     <script is:inline>
       (() => {
-        const key = 'aeon-theme';
+        const key = 'thunder-lab-theme';
         const stored = window.localStorage.getItem(key);
         const theme = stored === 'light' || stored === 'dark' ? stored : 'dark';
         document.documentElement.dataset.theme = theme;
@@ -57,76 +50,45 @@ function isActivePath(path: string) {
     </script>
     <title>{title}</title>
   </head>
-  <body class="bg-page-bg font-body text-white antialiased">
+  <body class="bg-page-bg antialiased">
     <div class="site-shell min-h-screen overflow-x-clip">
       <header
         data-site-header
         data-scroll-state="top"
-        class="sticky top-0 z-50 border-b border-white/8 bg-page-bg/72 shadow-[0_18px_60px_rgba(0,0,0,0.18)] backdrop-blur-xl transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform supports-[backdrop-filter]:bg-page-bg/58 data-[scroll-state=hidden]:-translate-y-full"
+        class="site-header sticky top-0 z-50 border-b border-white/10 bg-page-bg/82 shadow-[0_18px_60px_rgba(0,0,0,0.18)] backdrop-blur-xl transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-transform supports-[backdrop-filter]:bg-page-bg/68 data-[scroll-state=hidden]:-translate-y-full"
       >
         <div class="mx-auto flex max-w-7xl flex-col gap-4 px-6 py-5 sm:px-8 lg:px-12">
           <div class="flex items-center justify-between gap-4 sm:gap-6">
-            <a href="/" class="inline-flex w-[158px] items-center transition-opacity duration-300 hover:opacity-80 sm:w-[188px]">
-              <BrandLogo className="w-full" />
+            <a href="/" class="inline-flex min-h-11 items-center transition-opacity duration-300 hover:opacity-75">
+              <BrandLogo className="w-[190px] sm:w-[220px]" />
             </a>
             <div class="flex items-center gap-2 sm:gap-4">
-              <span class="hidden font-display text-[10px] uppercase tracking-[0.26em] text-white/40 sm:inline">Public Network</span>
+              <span class="site-header-meta hidden font-mono text-[10px] tracking-[0.16em] text-white/42 sm:inline">山东工商学院 / SDTBU</span>
               <ThemeToggle client:load className="h-10 w-10" />
               <details class="group relative flex items-center md:hidden">
                 <summary
-                  class="relative inline-flex h-10 w-10 shrink-0 cursor-pointer list-none items-center justify-center rounded-full border border-white/15 bg-white/10 text-white backdrop-blur-sm transition-colors duration-300 hover:border-accent-blue/45 hover:text-accent-blue [&::-webkit-details-marker]:hidden"
-                  aria-label="Menu"
+                  class="site-header-menu relative inline-flex h-10 w-10 shrink-0 cursor-pointer list-none items-center justify-center border border-white/15 bg-white/5 text-white backdrop-blur-sm transition-colors duration-300 hover:border-lab-accent hover:text-lab-accent [&::-webkit-details-marker]:hidden"
+                  aria-label="菜单"
                 >
-                  <span class="sr-only">Menu</span>
-                  <span class="flex flex-col items-center justify-center gap-1 group-open:hidden" aria-hidden="true">
-                    <span class="block h-px w-4 bg-current"></span>
-                    <span class="block h-px w-4 bg-current"></span>
-                    <span class="block h-px w-4 bg-current"></span>
-                  </span>
-                  <span class="relative hidden h-4 w-4 items-center justify-center group-open:flex" aria-hidden="true">
-                    <span class="absolute block h-px w-4 rotate-45 bg-current"></span>
-                    <span class="absolute block h-px w-4 -rotate-45 bg-current"></span>
-                  </span>
+                  <span class="sr-only">菜单</span>
+                  <span class="flex flex-col items-center justify-center gap-1 group-open:hidden" aria-hidden="true"><span class="block h-px w-4 bg-current"></span><span class="block h-px w-4 bg-current"></span><span class="block h-px w-4 bg-current"></span></span>
+                  <span class="relative hidden h-4 w-4 items-center justify-center group-open:flex" aria-hidden="true"><span class="absolute block h-px w-4 rotate-45 bg-current"></span><span class="absolute block h-px w-4 -rotate-45 bg-current"></span></span>
                 </summary>
-                <nav class="absolute right-0 top-[calc(100%+0.75rem)] z-50 w-[min(20rem,calc(100vw-3rem))] border border-white/10 bg-page-bg/94 p-4 shadow-[0_24px_70px_rgba(0,0,0,0.32)] backdrop-blur-xl">
-                  <div class="grid gap-3 font-display text-[11px] uppercase tracking-[0.24em]">
+                <nav class="site-header-mobile-nav absolute right-0 top-[calc(100%+0.75rem)] z-50 w-[min(20rem,calc(100vw-3rem))] border border-white/10 bg-lab-panel/96 p-4 shadow-[0_24px_70px_rgba(0,0,0,0.32)] backdrop-blur-xl" aria-label="移动端导航">
+                  <div class="grid gap-3 font-mono text-[13px] tracking-[0.06em]">
                     {siteNav.map((item) => {
                       const isActive = isActivePath(item.href);
-
-                      return (
-                        <a
-                          href={item.href}
-                          aria-current={isActive ? 'page' : undefined}
-                          class:list={[
-                            'py-1 transition-colors duration-300',
-                            isActive ? 'text-accent-blue' : 'text-white/62 hover:text-accent-blue',
-                          ]}
-                        >
-                          {item.label}
-                        </a>
-                      );
+                      return <a href={item.href} aria-current={isActive ? 'page' : undefined} class:list={['site-header-link border-b border-white/10 py-2 transition-colors duration-300', isActive ? 'text-lab-accent' : 'text-white/62 hover:text-lab-accent']}>{item.label}</a>;
                     })}
                   </div>
                 </nav>
               </details>
             </div>
           </div>
-          <nav class="hidden flex-wrap items-center gap-x-4 gap-y-3 font-display text-[10px] uppercase tracking-[0.24em] sm:gap-x-6 sm:text-[11px] md:flex">
+          <nav class="hidden flex-wrap items-center gap-x-5 gap-y-3 font-mono text-[13px] tracking-[0.06em] sm:gap-x-7 sm:text-[14px] md:flex" aria-label="主导航">
             {siteNav.map((item) => {
               const isActive = isActivePath(item.href);
-
-              return (
-                <a
-                  href={item.href}
-                  aria-current={isActive ? 'page' : undefined}
-                  class:list={[
-                    'transition-colors duration-300',
-                    isActive ? 'text-accent-blue' : 'text-white/56 hover:text-accent-blue',
-                  ]}
-                >
-                  {item.label}
-                </a>
-              );
+              return <a href={item.href} aria-current={isActive ? 'page' : undefined} class:list={['site-header-link transition-colors duration-300', isActive ? 'text-lab-accent' : 'text-white/55 hover:text-lab-accent']}>{item.label}</a>;
             })}
           </nav>
         </div>
@@ -135,47 +97,29 @@ function isActivePath(path: string) {
         (() => {
           const header = document.querySelector('[data-site-header]');
           if (!header) return;
-
           let lastScrollY = window.scrollY;
           let ticking = false;
           const revealDelta = 8;
           const topOffset = 24;
-
           const updateHeader = () => {
             const currentScrollY = window.scrollY;
             const delta = currentScrollY - lastScrollY;
-
-            if (currentScrollY <= topOffset) {
-              header.setAttribute('data-scroll-state', 'top');
-            } else if (delta > revealDelta) {
-              header.setAttribute('data-scroll-state', 'hidden');
-            } else if (delta < -revealDelta) {
-              header.setAttribute('data-scroll-state', 'visible');
-            }
-
+            if (currentScrollY <= topOffset) header.setAttribute('data-scroll-state', 'top');
+            else if (delta > revealDelta) header.setAttribute('data-scroll-state', 'hidden');
+            else if (delta < -revealDelta) header.setAttribute('data-scroll-state', 'visible');
             lastScrollY = currentScrollY;
             ticking = false;
           };
-
-          window.addEventListener(
-            'scroll',
-            () => {
-              if (!ticking) {
-                window.requestAnimationFrame(updateHeader);
-                ticking = true;
-              }
-            },
-            { passive: true },
-          );
+          window.addEventListener('scroll', () => {
+            if (!ticking) {
+              window.requestAnimationFrame(updateHeader);
+              ticking = true;
+            }
+          }, { passive: true });
         })();
       </script>
       <slot />
-      <FooterSection
-        client:visible
-        directory={footerDirectory}
-        meta={footerMeta}
-        policies={footerPolicies}
-      />
+      <FooterSection client:visible directory={footerDirectory} meta={footerMeta} policies={footerPolicies} />
     </div>
   </body>
 </html>

@@ -7,27 +7,24 @@ import type {
   NextDepartureContent,
   SpectrumBarProps,
 } from '../data/site';
-import { formatLaunchTime, formatReadingTime, formatShortDate, toUtcDateInput } from './format';
+import { formatReadingTime } from './format';
 
 export type MissionEntry = CollectionEntry<'missions'>;
 export type ReportEntry = CollectionEntry<'reports'>;
 export type DepartureEntry = CollectionEntry<'departures'>;
 export type NewsEntry = CollectionEntry<'news'>;
+export type NoteEntry = CollectionEntry<'notes'>;
 export type PageEntry = CollectionEntry<'pages'>;
 export type SingletonPageId = 'about' | 'science' | 'technology';
 
-function buildLaunchTimestamp(launchDate: Date, launchTime: string) {
-  const normalizedTime = launchTime.length === 5 ? `${launchTime}:00` : launchTime;
-  return new Date(`${toUtcDateInput(launchDate)}T${normalizedTime}Z`).getTime();
-}
-
 export function estimateReadingTime(body: string) {
-  const words = body.trim().split(/\s+/).filter(Boolean).length;
-  return Math.max(1, Math.ceil(words / 200));
+  const chineseCharacters = (body.match(/[\u4e00-\u9fff]/g) ?? []).length;
+  const latinWords = body.replace(/[\u4e00-\u9fff]/g, ' ').trim().split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.ceil((chineseCharacters / 420) + (latinWords / 200)));
 }
 
-export function getReadingTimeLabel(body: string) {
-  return formatReadingTime(estimateReadingTime(body));
+export function getReadingTimeLabel(body?: string) {
+  return formatReadingTime(estimateReadingTime(body ?? ''));
 }
 
 export async function getMissionEntries() {
@@ -42,11 +39,7 @@ export async function getReportEntries() {
 
 export async function getDepartureEntries() {
   const entries = await getCollection('departures');
-  return entries.sort(
-    (left, right) =>
-      buildLaunchTimestamp(left.data.launchDate, left.data.launchTime) -
-      buildLaunchTimestamp(right.data.launchDate, right.data.launchTime),
-  );
+  return entries.sort((left, right) => left.data.order - right.data.order);
 }
 
 export async function getNewsEntries() {
@@ -80,10 +73,10 @@ export function toDiscoveryContent(entry: ReportEntry): DiscoveryContent {
     body: entry.data.summary,
     cta: {
       href: `/reports/${entry.id}/`,
-      label: 'Read Report',
+      label: '阅读项目档案',
     },
     archiveHref: '/reports/',
-    archiveLabel: 'View All Reports',
+    archiveLabel: '查看全部成果',
     image: entry.data.image,
     rangeStart: entry.data.rangeStart,
     rangeEnd: entry.data.rangeEnd,
@@ -96,10 +89,8 @@ export function toSpectrumBars(entry: ReportEntry): SpectrumBarProps[] {
 
 export function toNextDepartureContent(entry: DepartureEntry): NextDepartureContent {
   return {
-    title: 'Next Departure',
-    label: 'T-Minus',
-    launchDate: toUtcDateInput(entry.data.launchDate),
-    launchTime: entry.data.launchTime,
+    title: '加入迅雷实验室',
+    label: '招新与培训流程',
     image: entry.data.image,
     allHref: '/departures/',
   };
@@ -107,10 +98,15 @@ export function toNextDepartureContent(entry: DepartureEntry): NextDepartureCont
 
 export function toLaunchRow(entry: DepartureEntry): LaunchRowProps {
   return {
-    date: formatShortDate(entry.data.launchDate),
-    time: formatLaunchTime(entry.data.launchTime),
+    date: entry.data.date,
+    time: entry.data.time,
     title: entry.data.title,
     detail: entry.data.detail,
     href: `/departures/${entry.id}/`,
   };
+}
+
+export async function getNoteEntries() {
+  const entries = await getCollection('notes');
+  return entries.sort((left, right) => left.data.order - right.data.order);
 }

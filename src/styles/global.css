@@ -1,119 +1,147 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   迅雷实验室 — 配色取自实验室的真实材料：黑色阻焊油墨、FR-4 基材、
+   铜箔焊盘、焊锡、丝印。不是"科技感"渐变。
+   ========================================================================== */
+
 @theme {
-  --color-page-bg: #080d14;
-  --color-dark-space: #0d1b2a;
-  --color-page-cream: #e8dfc8;
-  --color-navy-text: #1a2e42;
-  --color-muted-navy: #2a3d52;
-  --color-accent-blue: #4a9eff;
-  --color-warm-gold: #f0c070;
-  --color-section-dark: #0a111a;
-  --color-deep-space-card: #0d1b2a;
-  --color-footer-bg: #05080c;
-  --font-display: "Orbitron", sans-serif;
-  --font-body: "Space Grotesk", sans-serif;
+  /* 材料 */
+  --color-insulator: #0c100f;   /* 黑色阻焊油墨 */
+  --color-insulator-2: #111614; /* 阻焊层提亮一档 */
+  --color-laminate: #e6e8de;    /* FR-4 基材 */
+  --color-laminate-2: #dcded2;  /* 基材压深一档 */
+  --color-edge: #f4f5ee;        /* 赛道白边线 */
+  --color-copper: #c4863a;      /* 铜箔 */
+  --color-solder: #8d9a94;      /* 焊锡灰 */
+  --color-ink: #101413;         /* 丝印黑 */
+
+  /* 兼容既有组件引用的名字，全部指向新材料色 */
+  --color-page-bg: #0c100f;
+  --color-page-cream: #f4f5ee;
+  --color-dark-space: #0c100f;
+  --color-navy-text: #101413;
+  --color-muted-navy: #8d9a94;
+  --color-accent-blue: #c4863a;
+  --color-warm-gold: #c4863a;
+  --color-section-dark: #0c100f;
+  --color-deep-space-card: #111614;
+  --color-footer-bg: #050807;
+  --color-lab-bg: #0c100f;
+  --color-lab-panel: #111614;
+  --color-lab-surface: #141917;
+  --color-lab-paper: #e6e8de;
+  --color-lab-ink: #101413;
+  --color-lab-accent: #c4863a;
+  --color-lab-muted: #8d9a94;
+  --color-lab-line: rgba(230, 232, 222, 0.16);
+
+  --font-display: "Noto Serif SC", "Songti SC", serif;
+  --font-body: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
 }
 
-@keyframes star-pulse {
-  0%,
-  100% {
-    opacity: 0.3;
-    transform: scale(1);
-  }
-
-  50% {
-    opacity: 1;
-    transform: scale(1.5);
-  }
-}
-
+/* ==========================================================================
+   主题：明暗两套地面。
+   每一节的地面都由主题决定，章节只用"抬高一级"来区分，
+   所以整页永远属于同一个色系，主题开关也一定生效。
+   ========================================================================== */
 :root,
 html[data-theme='dark'] {
   color-scheme: dark;
-  --shell-glow: rgba(74, 158, 255, 0.08);
-  --shell-bg-start: #080d14;
-  --shell-bg-end: #05080c;
-  --body-strong: #ffffff;
-  --body-muted: rgba(255, 255, 255, 0.72);
-  --body-soft: rgba(255, 255, 255, 0.62);
-  --line-subtle: rgba(255, 255, 255, 0.1);
-  --panel-tint: rgba(255, 255, 255, 0.03);
-  --panel-tint-strong: rgba(255, 255, 255, 0.04);
-  --panel-inverse: rgba(0, 0, 0, 0.22);
-  --hero-image-opacity: 0.45;
-  --hero-image-blend: screen;
-  --hero-utility-color: rgba(255, 255, 255, 0.6);
-  --overlay-hero-title: #ffffff;
-  --overlay-hero-copy: rgba(255, 255, 255, 0.76);
-  --overlay-feature-title: #ffffff;
-  --overlay-feature-copy: rgba(255, 255, 255, 0.76);
-  --overlay-feature-meta: rgba(255, 255, 255, 0.62);
-  --discovery-surface: #080d14;
-  --discovery-overlay: linear-gradient(to bottom,#080d14,rgba(8,13,20,0.55),#080d14);
-  --discovery-title: #ffffff;
-  --discovery-copy: rgba(255,255,255,0.75);
-  --discovery-meta: rgba(255,255,255,0.56);
-  --discovery-chart-surface: rgba(0,0,0,0.2);
-  --discovery-axis: rgba(255,255,255,0.55);
-  --departure-surface: #0d1b2a;
-  --departure-title: #ffffff;
-  --departure-copy: rgba(255,255,255,0.62);
-  --departure-meta: rgba(255,255,255,0.5);
-  --departure-countdown-surface: rgba(0,0,0,0.25);
+
+  /* 地面 */
+  --ground-base: #0c100f;
+  --ground-raised: #131918;
+  --ground-sunken: #070a09;
+
+  /* 文字与描边 */
+  --body-strong: #edefe8;
+  --body-muted: rgba(237, 239, 232, 0.66);
+  --body-soft: rgba(237, 239, 232, 0.46);
+  --line-subtle: rgba(237, 239, 232, 0.15);
+  --panel-tint: rgba(237, 239, 232, 0.04);
+
+  /* 强调色：暗底上偏亮的铜 */
+  --accent: #c4863a;
+  --accent-contrast: #0c100f;
+
+  --shell-glow: rgba(196, 134, 58, 0.07);
+
+  /* 兼容既有组件引用 */
+  --color-page-bg: #0c100f;
+  --color-page-cream: #f4f5ee;
+  --color-dark-space: #0c100f;
+  --color-navy-text: #101413;
+  --color-muted-navy: #8d9a94;
+  --color-accent-blue: #c4863a;
+  --color-warm-gold: #c4863a;
+  --color-section-dark: #0c100f;
+  --color-deep-space-card: #131918;
+  --color-footer-bg: #070a09;
+  --color-lab-bg: #0c100f;
+  --color-lab-panel: #131918;
+  --color-lab-surface: #182120;
+  --color-lab-paper: #e6e8de;
+  --color-lab-ink: #101413;
+  --color-lab-accent: #c4863a;
+  --color-lab-muted: #8d9a94;
+  --color-lab-line: rgba(237, 239, 232, 0.15);
 }
 
 html[data-theme='light'] {
   color-scheme: light;
-  --color-page-bg: #f3ede0;
-  --color-dark-space: #163149;
-  --color-page-cream: #fcf4e4;
-  --color-navy-text: #16283a;
-  --color-muted-navy: #32485d;
-  --color-section-dark: #ebe3d4;
-  --color-deep-space-card: #fff9ef;
-  --color-footer-bg: #e1d9c8;
-  --shell-glow: rgba(74, 158, 255, 0.12);
-  --shell-bg-start: #f3ede0;
-  --shell-bg-end: #e4dcc9;
-  --body-strong: #16283a;
-  --body-muted: rgba(22, 40, 58, 0.74);
-  --body-soft: rgba(22, 40, 58, 0.62);
-  --line-subtle: rgba(22, 40, 58, 0.12);
-  --panel-tint: rgba(22, 40, 58, 0.04);
-  --panel-tint-strong: rgba(22, 40, 58, 0.06);
-  --panel-inverse: rgba(252, 244, 228, 0.76);
-  --hero-image-opacity: 0.32;
-  --hero-image-blend: normal;
-  --hero-utility-color: rgba(252, 244, 228, 0.82);
-  --overlay-hero-title: #16283a;
-  --overlay-hero-copy: rgba(22, 40, 58, 0.78);
-  --overlay-feature-title: #ffffff;
-  --overlay-feature-copy: rgba(255, 255, 255, 0.78);
-  --overlay-feature-meta: rgba(255, 255, 255, 0.68);
-  --discovery-surface: #ece4d4;
-  --discovery-overlay: linear-gradient(to bottom,rgba(243,237,224,0.92),rgba(243,237,224,0.62),rgba(243,237,224,0.95));
-  --discovery-title: #16283a;
-  --discovery-copy: rgba(22,40,58,0.78);
-  --discovery-meta: rgba(22,40,58,0.62);
-  --discovery-chart-surface: rgba(252,244,228,0.7);
-  --discovery-axis: rgba(22,40,58,0.62);
-  --departure-surface: #ece4d4;
-  --departure-title: #16283a;
-  --departure-copy: rgba(22,40,58,0.76);
-  --departure-meta: rgba(22,40,58,0.58);
-  --departure-countdown-surface: rgba(252,244,228,0.78);
+
+  --ground-base: #e6e8de;
+  --ground-raised: #f1f2ea;
+  --ground-sunken: #dbddd1;
+
+  --body-strong: #101413;
+  --body-muted: rgba(16, 20, 19, 0.68);
+  --body-soft: rgba(16, 20, 19, 0.48);
+  --line-subtle: rgba(16, 20, 19, 0.15);
+  --panel-tint: rgba(16, 20, 19, 0.04);
+
+  /* 浅底上铜要压深，才有足够对比 */
+  --accent: #8a5312;
+  --accent-contrast: #f6f7f0;
+
+  --shell-glow: rgba(138, 83, 18, 0.06);
+
+  --color-page-bg: #e6e8de;
+  --color-page-cream: #f6f7f0;
+  --color-dark-space: #dbddd1;
+  --color-navy-text: #101413;
+  --color-muted-navy: #5c6a64;
+  --color-accent-blue: #8a5312;
+  --color-warm-gold: #8a5312;
+  --color-section-dark: #dbddd1;
+  --color-deep-space-card: #f1f2ea;
+  --color-footer-bg: #101413;
+  --color-lab-bg: #e6e8de;
+  --color-lab-panel: #f1f2ea;
+  --color-lab-surface: #dbddd1;
+  --color-lab-paper: #e6e8de;
+  --color-lab-ink: #101413;
+  --color-lab-accent: #8a5312;
+  --color-lab-muted: #5c6a64;
+  --color-lab-line: rgba(16, 20, 19, 0.15);
 }
 
 html {
   scroll-behavior: smooth;
-  background: var(--color-page-bg);
+  background: var(--ground-base);
+  /* 主题切换要有过渡，否则明暗跳变很割裂 */
+  transition: background-color 320ms ease;
 }
 
 body {
   min-height: 100vh;
   overflow-x: hidden;
-  background: var(--color-page-bg);
+  background: var(--ground-base);
+  color: var(--body-strong);
+  font-family: var(--font-body);
+  transition: background-color 320ms ease, color 320ms ease;
 }
 
 img {
@@ -121,174 +149,424 @@ img {
 }
 
 .site-shell {
+  background: var(--ground-base);
+}
+
+/* ==========================================================================
+   地面：同一主题下只有"基准"和"抬高一级"两种，由主题决定具体颜色。
+   不写死明暗，所以主题开关一定生效，整页也不会割裂。
+   ========================================================================== */
+
+.lab-ground {
+  position: relative;
+  padding-block: 6rem;
+  background: var(--ground-base);
+  color: var(--body-strong);
+  transition: background-color 320ms ease, color 320ms ease;
+}
+
+@media (min-width: 640px) {
+  .lab-ground {
+    padding-block: 8rem;
+  }
+}
+
+/* 抬高一级：与基准同色系，只差一点点亮度 */
+.lab-ground-raised {
+  background: var(--ground-raised);
+}
+
+/* 下沉一级：用于页脚 */
+.lab-ground-sunken {
+  background: var(--ground-sunken);
+}
+
+/* 主题感知：组件内部仍写 text-white / text-lab-ink 等名字，
+   由当前主题统一决定落色。
+   这里不限定在 .lab-ground 里，因为详情页、列表页的标题区
+   直接挂在 body 上，也需要跟着主题走。 */
+.text-white,
+.text-lab-ink {
+  color: var(--body-strong);
+}
+
+[class*="text-white/"],
+[class*="text-lab-ink/"] {
+  color: var(--body-muted);
+}
+
+[class*="border-white/"],
+.border-lab-line,
+[class*="border-lab-ink/"] {
+  border-color: var(--line-subtle);
+}
+
+.text-lab-accent,
+.text-accent-blue,
+.text-warm-gold {
+  color: var(--accent);
+}
+
+.bg-lab-accent {
+  background-color: var(--accent);
+}
+
+.bg-lab-ink {
+  background-color: var(--body-strong);
+}
+
+.text-\[\#e6e8de\] {
+  color: var(--accent-contrast);
+}
+
+.bg-white\/40,
+.bg-white\/\[0\.03\] {
+  background-color: var(--panel-tint);
+}
+
+/* 章节之间用一条走线连接，节点是焊盘 */
+.lab-trace {
+  position: relative;
+}
+
+.lab-trace::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 1.5rem;
+  width: 1px;
+  content: "";
+  background: var(--line-subtle);
+}
+
+@media (min-width: 1024px) {
+  .lab-trace::before {
+    left: 3rem;
+  }
+}
+
+.lab-trace > * {
+  position: relative;
+}
+
+/* 章节起始的焊盘 */
+.lab-pad {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  color: var(--body-soft);
+}
+
+.lab-pad::before {
+  display: block;
+  width: 0.5rem;
+  height: 0.5rem;
+  content: "";
+  border-radius: 9999px;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 16%, transparent);
+}
+
+/* ==========================================================================
+   首屏
+   ========================================================================== */
+
+.lab-hero {
+  position: relative;
+  background: var(--ground-base);
+  color: #edefe8;
+}
+
+/* 首屏入场：纯 CSS，不依赖 JS 水合。
+   这样即使脚本失败或加载慢，标题也一定可见。 */
+@keyframes heroRise {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-rise {
+  animation: heroRise 720ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* 首屏主按钮：铜底 + 深色字，悬停转为纸色 */
+.hero-cta {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  transition: background-color 300ms ease, color 300ms ease;
+}
+
+.hero-cta:hover {
+  background: #edefe8;
+  color: #0c100f;
+}
+
+.lab-hero {
+  position: relative;
+  /* 首屏是深色观测台，两套主题下都保持深底，
+     否则浅色主题里浅底 + 浅字会完全读不出来。
+     所以这里把整套文字色 / 强调色都钉在深色方案上。 */
+  background: #0c100f;
+  color: #edefe8;
+  --accent: #c4863a;
+  --accent-contrast: #0c100f;
+  --color-lab-accent: #c4863a;
+  --color-accent-blue: #c4863a;
+  --color-warm-gold: #c4863a;
+  --body-strong: #edefe8;
+  --body-muted: rgba(237, 239, 232, 0.66);
+  --line-subtle: rgba(237, 239, 232, 0.15);
+  --panel-tint: rgba(237, 239, 232, 0.04);
+}
+
+.lab-hero-image {
+  filter: saturate(0.6) contrast(1.15);
+}
+
+.lab-hero-scrim {
+  background:
+    linear-gradient(100deg, rgba(6, 9, 8, 0.96) 0%, rgba(6, 9, 8, 0.78) 46%, rgba(6, 9, 8, 0.42) 100%),
+    linear-gradient(0deg, rgba(6, 9, 8, 0.86), transparent 44%);
+}
+
+.lab-hero-grid {
   background-image:
-    radial-gradient(circle_at_top, var(--shell-glow), transparent 28%),
-    linear-gradient(to bottom, var(--shell-bg-start), var(--shell-bg-end));
+    linear-gradient(rgba(230, 232, 222, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(230, 232, 222, 0.07) 1px, transparent 1px);
+  background-size: 6rem 6rem;
+  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent 72%);
+  opacity: 0.5;
 }
 
-.hero-sky-image {
-  opacity: var(--hero-image-opacity);
-  mix-blend-mode: var(--hero-image-blend);
+/* 探针光斑：标题两层叠印，上层铜色被鼠标位置的圆形遮罩揭开。
+   全站唯一一处强动效。 */
+.probe-stack {
+  position: relative;
+  display: grid;
+  isolation: isolate;
 }
 
-.hero-utility-label {
-  color: var(--hero-utility-color);
+/* h1 是 stack 的唯一网格子项；两层标题必须落在同一格上才算叠印 */
+.probe-stack > * {
+  grid-area: 1 / 1;
 }
 
-.brand-logo {
-  display: inline-grid;
-  line-height: 0;
+.probe-stack h1 {
+  display: grid;
 }
 
-.brand-logo-image {
+.probe-layer {
   display: block;
   grid-area: 1 / 1;
-  height: auto;
+}
+
+.probe-dim {
+  /* 未点亮时只是低对比，不是读不出来。
+     0.5 时对比度约 4.8:1，过 AA；再低就不合适了。 */
+  color: rgba(237, 239, 232, 0.5);
+}
+
+.probe-lit {
+  color: var(--accent);
+  -webkit-mask-image: radial-gradient(
+    circle var(--probe-r, 190px) at var(--probe-x, 50%) var(--probe-y, 50%),
+    #000 0%,
+    rgba(0, 0, 0, 0.55) 42%,
+    transparent 76%
+  );
+  mask-image: radial-gradient(
+    circle var(--probe-r, 190px) at var(--probe-x, 50%) var(--probe-y, 50%),
+    #000 0%,
+    rgba(0, 0, 0, 0.55) 42%,
+    transparent 76%
+  );
+  transition: opacity 400ms ease;
+}
+
+.probe-idle .probe-lit {
+  opacity: 0;
+}
+
+/* 没有指针（触屏）时不能让标题停在暗色层 */
+@media (hover: none) {
+  .probe-lit {
+    display: none;
+  }
+
+  .probe-dim {
+    color: #edefe8;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .probe-dim {
+    color: #edefe8;
+  }
+
+  .probe-lit {
+    display: none;
+  }
+
+  .hero-rise {
+    animation: none;
+  }
+}
+
+/* 首屏右侧的信号条 */
+.lab-waveform {
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(237, 239, 232, 0.18);
+  border-bottom: 1px solid rgba(237, 239, 232, 0.18);
+  background: repeating-linear-gradient(90deg, transparent 0 18px, rgba(237, 239, 232, 0.1) 19px 20px);
+}
+
+.lab-waveform::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: var(--accent);
+  clip-path: polygon(0 58%, 7% 58%, 10% 44%, 13% 64%, 20% 64%, 24% 28%, 27% 74%, 34% 74%, 39% 50%, 44% 58%, 50% 58%, 55% 18%, 58% 82%, 65% 82%, 70% 55%, 76% 55%, 80% 38%, 84% 66%, 91% 66%, 95% 45%, 100% 45%, 100% 49%, 95% 49%, 91% 70%, 84% 70%, 80% 42%, 76% 59%, 70% 59%, 65% 86%, 58% 86%, 55% 22%, 50% 62%, 44% 62%, 39% 54%, 34% 78%, 27% 78%, 24% 32%, 20% 68%, 13% 68%, 10% 48%, 7% 62%, 0 62%);
+}
+
+/* ==========================================================================
+   品牌标识
+   ========================================================================== */
+
+.lab-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  line-height: 1;
+  color: var(--body-strong);
+}
+
+.lab-brand-tone-light {
+  color: var(--body-strong);
+}
+
+.lab-brand-mark {
+  display: inline-flex;
+  height: 2.35rem;
+  width: 2.35rem;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex: 0 0 auto;
+}
+
+.lab-brand-mark img {
+  display: block;
+  height: 100%;
   width: 100%;
-  transition: opacity 240ms ease;
+  object-fit: contain;
 }
 
-.brand-logo-image-light {
-  opacity: 0;
+.lab-brand-copy {
+  display: grid;
+  gap: 0.35rem;
 }
 
-.brand-logo-tone-dark .brand-logo-image-dark,
-.brand-logo-tone-light .brand-logo-image-light {
-  opacity: 1;
+.lab-brand-copy strong {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
 }
 
-.brand-logo-tone-dark .brand-logo-image-light,
-.brand-logo-tone-light .brand-logo-image-dark {
-  opacity: 0;
+.lab-brand-copy small {
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.12em;
+  opacity: 0.5;
+  white-space: nowrap;
 }
 
-html[data-theme='light'] .brand-logo-image-dark {
-  opacity: 0;
+.lab-brand-symbol-only {
+  width: 3.5rem;
+  justify-content: center;
 }
 
-html[data-theme='light'] .brand-logo-image-light {
-  opacity: 1;
+.lab-brand-symbol-only .lab-brand-mark {
+  height: 3.5rem;
+  width: 3.5rem;
 }
 
-html[data-theme='light'] .brand-logo-tone-dark .brand-logo-image-dark,
-html[data-theme='light'] .brand-logo-tone-light .brand-logo-image-light {
-  opacity: 1;
+.site-header {
+  border-color: var(--line-subtle) !important;
+  background-color: color-mix(in srgb, var(--ground-base) 82%, transparent) !important;
 }
 
-html[data-theme='light'] .brand-logo-tone-dark .brand-logo-image-light,
-html[data-theme='light'] .brand-logo-tone-light .brand-logo-image-dark {
-  opacity: 0;
+.site-header-meta,
+.site-header-link {
+  color: var(--body-muted) !important;
 }
+
+.site-header-link:hover,
+.site-header-link[aria-current='page'] {
+  color: var(--accent) !important;
+}
+
+.site-header-menu {
+  border-color: var(--line-subtle) !important;
+  background: var(--panel-tint) !important;
+  color: var(--body-strong) !important;
+}
+
+.site-header-mobile-nav {
+  border-color: var(--line-subtle) !important;
+  background: color-mix(in srgb, var(--ground-raised) 96%, transparent) !important;
+}
+
+/* ==========================================================================
+   控件
+   ========================================================================== */
 
 .theme-toggle {
-  box-shadow: 0 0 0 1px transparent;
+  color: var(--body-strong);
+  border-color: var(--line-subtle);
+  background: var(--panel-tint);
 }
 
-html[data-theme='light'] .theme-toggle-shell {
-  background: rgba(22, 40, 58, 0.08) !important;
-  border-color: rgba(22, 40, 58, 0.14) !important;
-  color: #16283a !important;
+.theme-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
-html[data-theme='light'] .theme-toggle-hero {
-  background: rgba(252, 244, 228, 0.92) !important;
-  border-color: rgba(22, 40, 58, 0.14) !important;
-  color: #16283a !important;
+.theme-toggle-hero {
+  color: #edefe8;
 }
 
-.overlay-hero-title {
-  color: var(--overlay-hero-title);
+.theme-toggle-shell {
+  color: var(--body-strong);
+  border-color: var(--line-subtle);
+  background: var(--panel-tint);
 }
 
-.overlay-hero-copy {
-  color: var(--overlay-hero-copy);
-}
-
-.overlay-feature-scrim {
-  background: linear-gradient(180deg,rgba(5,8,12,0.12),rgba(5,8,12,0.58) 42%,rgba(5,8,12,0.94));
-}
-
-html[data-theme='light'] .overlay-feature-scrim {
-  background: linear-gradient(180deg,rgba(5,8,12,0.08),rgba(5,8,12,0.5) 42%,rgba(5,8,12,0.9));
-}
-
-html[data-theme='light'] .overlay-hero-title-image {
-  color: #ffffff;
-}
-
-html[data-theme='light'] .overlay-hero-copy-image {
-  color: rgba(255, 255, 255, 0.78);
-}
-
-.overlay-feature-title {
-  color: var(--overlay-feature-title);
-}
-
-.overlay-feature-copy {
-  color: var(--overlay-feature-copy);
-}
-
-.overlay-feature-meta {
-  color: var(--overlay-feature-meta);
-}
-
-.discovery-surface {
-  background: var(--discovery-surface);
-}
-
-.discovery-overlay {
-  background: var(--discovery-overlay);
-}
-
-.discovery-title {
-  color: var(--discovery-title);
-}
-
-.discovery-copy {
-  color: var(--discovery-copy);
-}
-
-.discovery-meta {
-  color: var(--discovery-meta);
-}
-
-.discovery-chart-card {
-  background: var(--discovery-chart-surface);
-}
-
-.discovery-axis {
-  color: var(--discovery-axis);
-}
-
-.departure-surface {
-  background: var(--departure-surface);
-}
-
-.departure-title {
-  color: var(--departure-title);
-}
-
-.departure-copy {
-  color: var(--departure-copy);
-}
-
-.departure-meta {
-  color: var(--departure-meta);
-}
-
-.departure-countdown-panel {
-  background: var(--departure-countdown-surface);
-}
-
-.hero-star {
-  animation-name: star-pulse;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 .text-balance {
   text-wrap: balance;
 }
+
+/* ==========================================================================
+   正文排版
+   ========================================================================== */
 
 .markdown-prose {
   color: var(--body-muted);
@@ -301,36 +579,38 @@ html[data-theme='light'] .overlay-hero-copy-image {
 .markdown-prose h2,
 .markdown-prose h3,
 .markdown-prose h4 {
-  font-family: var(--font-display);
+  margin-top: 2.8rem;
+  border-left: 2px solid var(--accent);
+  padding-left: 1rem;
   color: var(--body-strong);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  line-height: 1;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
 }
 
 .markdown-prose h2 {
-  margin-top: 2.75rem;
-  font-size: clamp(1.7rem, 2vw, 2.25rem);
+  font-size: clamp(1.7rem, 2.4vw, 2.4rem);
 }
 
 .markdown-prose h3 {
-  margin-top: 2rem;
-  font-size: clamp(1.35rem, 1.5vw, 1.7rem);
+  font-size: clamp(1.3rem, 1.7vw, 1.7rem);
 }
 
 .markdown-prose p,
 .markdown-prose li {
-  font-size: 1.08rem;
+  max-width: 68ch;
+  font-size: 1.05rem;
   line-height: 2;
 }
 
 .markdown-prose ul,
 .markdown-prose ol {
-  padding-left: 1.25rem;
+  padding-left: 1.35rem;
 }
 
 .markdown-prose li::marker {
-  color: #4a9eff;
+  color: var(--accent);
 }
 
 .markdown-prose strong {
@@ -338,7 +618,9 @@ html[data-theme='light'] .overlay-hero-copy-image {
 }
 
 .markdown-prose a {
-  color: #4a9eff;
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
 .markdown-prose hr {
@@ -347,34 +629,39 @@ html[data-theme='light'] .overlay-hero-copy-image {
 }
 
 .markdown-prose blockquote {
-  border-left: 1px solid rgba(74, 158, 255, 0.6);
+  border-left: 2px solid var(--accent);
   padding-left: 1rem;
   color: var(--body-soft);
 }
 
-html[data-theme='light'] .text-white {
-  color: var(--body-strong) !important;
+.markdown-prose code {
+  border: 1px solid var(--line-subtle);
+  padding: 0.1em 0.35em;
+  font-family: var(--font-mono);
+  font-size: 0.92em;
 }
 
-html[data-theme='light'] [class*='text-white/'] {
-  color: var(--body-muted) !important;
+/* ==========================================================================
+   其它保留类
+   ========================================================================== */
+
+.lab-evidence {
+  border: 1px solid var(--line-subtle);
+  background: var(--panel-tint);
 }
 
-html[data-theme='light'] [class*='border-white/'] {
-  border-color: var(--line-subtle) !important;
+.lab-evidence-overlay {
+  display: none;
 }
 
-html[data-theme='light'] [class*='bg-white/'] {
-  background-color: var(--panel-tint) !important;
+.lab-chart-card {
+  border: 1px solid var(--line-subtle);
+  background: var(--panel-tint);
 }
 
-html[data-theme='light'] [class*='bg-black/'] {
-  background-color: var(--panel-inverse) !important;
-}
-
-html[data-theme='light'] .hero-star {
-  background: #163149;
-  opacity: 0.55;
+.lab-footer {
+  background: var(--ground-sunken);
+  color: var(--body-strong);
 }
 
 @media (max-width: 48rem) {
@@ -383,6 +670,18 @@ html[data-theme='light'] .hero-star {
     font-size: 1rem;
     line-height: 1.9;
   }
+
+  .lab-brand-copy strong {
+    font-size: 1.02rem;
+  }
+
+  .lab-brand-copy small {
+    font-size: 0.47rem;
+  }
+
+  .lab-trace::before {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -390,9 +689,12 @@ html[data-theme='light'] .hero-star {
     scroll-behavior: auto;
   }
 
-  .hero-star {
-    animation: none;
-    opacity: 0.75;
-    transform: none;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }

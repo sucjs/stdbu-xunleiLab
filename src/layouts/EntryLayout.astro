@@ -1,11 +1,7 @@
 ---
 import SiteLayout from './SiteLayout.astro';
 
-interface DetailItem {
-  label: string;
-  value: string;
-}
-
+interface DetailItem { label: string; value: string; }
 interface Props {
   backHref: string;
   backLabel: string;
@@ -17,55 +13,21 @@ interface Props {
   title: string;
 }
 
-const {
-  backHref,
-  backLabel,
-  description,
-  details = [],
-  eyebrow,
-  image,
-  summary,
-  title,
-} = Astro.props;
+const { backHref, backLabel, description, details = [], eyebrow, image, summary, title } = Astro.props;
 ---
 
-<SiteLayout title={`${title} | AEON Space Agency`} description={description ?? summary}>
+<SiteLayout title={`${title} | 迅雷实验室`} description={description ?? summary}>
   <main class="mx-auto max-w-7xl px-6 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
-    <a
-      href={backHref}
-      class="inline-flex items-center gap-3 font-display text-[11px] uppercase tracking-[0.26em] text-white/56 transition-colors duration-300 hover:text-accent-blue"
-    >
-      <span aria-hidden="true">←</span>
-      {backLabel}
-    </a>
-
-    <section class={`mt-8 grid gap-10 ${image ? 'lg:grid-cols-[minmax(0,1.05fr)_420px] lg:items-start' : ''}`}>
+    <a href={backHref} class="inline-flex items-center gap-3 font-mono text-[11px] tracking-[0.12em] text-white/52 transition-colors duration-300 hover:text-lab-accent"><span aria-hidden="true">←</span>{backLabel}</a>
+    <section class={`mt-8 grid gap-10 ${image ? 'lg:grid-cols-[minmax(0,1.05fr)_420px] lg:items-start lg:gap-16' : ''}`}>
       <div>
-        <p class="font-display text-[11px] uppercase tracking-[0.28em] text-warm-gold">{eyebrow}</p>
-        <h1 class="mt-5 break-words font-display text-[2.85rem] leading-none font-bold text-white sm:text-6xl lg:text-7xl">{title}</h1>
+        <p class="font-mono text-[10px] tracking-[0.2em] text-lab-accent">{eyebrow}</p>
+        <h1 class="mt-5 max-w-4xl font-display text-[clamp(3rem,6vw,6.8rem)] leading-[0.9] tracking-[-0.06em] text-white">{title}</h1>
         <p class="mt-7 max-w-3xl text-lg leading-8 text-white/65 sm:text-xl">{summary}</p>
       </div>
-
-      {image ? (
-        <div class="overflow-hidden border border-white/10 bg-white/3">
-          <img src={image} alt={title} class="aspect-[4/3] h-full w-full object-cover" />
-        </div>
-      ) : null}
+      {image ? <div class="overflow-hidden border border-lab-line"><img src={image} alt={title} class="aspect-[4/3] h-full w-full object-cover" /></div> : null}
     </section>
-
-    {details.length ? (
-      <section class="mt-10 grid gap-4 border-y border-white/8 py-6 sm:grid-cols-2 xl:grid-cols-4">
-        {details.map((item) => (
-          <div>
-            <div class="font-display text-[10px] uppercase tracking-[0.24em] text-accent-blue">{item.label}</div>
-            <div class="mt-2 text-base leading-7 text-white/72">{item.value}</div>
-          </div>
-        ))}
-      </section>
-    ) : null}
-
-    <article class="markdown-prose mt-12 max-w-4xl">
-      <slot />
-    </article>
+    {details.length ? <section class="mt-10 grid gap-5 border-y border-lab-line py-6 sm:grid-cols-2 xl:grid-cols-4">{details.map((item) => <div><div class="font-mono text-[10px] tracking-[0.12em] text-lab-accent">{item.label}</div><div class="mt-2 text-base leading-7 text-white/68">{item.value}</div></div>)}</section> : null}
+    <article class="markdown-prose mt-12 max-w-4xl"><slot /></article>
   </main>
 </SiteLayout>

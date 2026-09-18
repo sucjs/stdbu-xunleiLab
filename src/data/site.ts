@@ -5,6 +5,7 @@ export interface NavLink {
 
 export interface HeroContent {
   eyebrow: string;
+  title: string;
   paragraph: string;
   primaryCta: NavLink;
   secondaryCta: NavLink;
@@ -53,8 +54,6 @@ export interface NextDepartureContent {
   allHref: string;
   image: string;
   label: string;
-  launchDate: string;
-  launchTime: string;
   title: string;
 }
 
@@ -64,57 +63,59 @@ export interface FooterMeta {
 }
 
 export const siteNav: NavLink[] = [
-  { label: 'Missions', href: '/missions/' },
-  { label: 'Reports', href: '/reports/' },
-  { label: 'News', href: '/news/' },
-  { label: 'Departures', href: '/departures/' },
-  { label: 'Technology', href: '/technology/' },
-  { label: 'Science', href: '/science/' },
-  { label: 'About', href: '/about/' },
+  { label: '研究方向', href: '/missions/' },
+  { label: '竞赛成果', href: '/reports/' },
+  { label: '技术专题', href: '/notes/' },
+  { label: '实验室动态', href: '/news/' },
+  { label: '加入我们', href: '/departures/' },
+  { label: '设备与技术', href: '/technology/' },
+  { label: '培养体系', href: '/science/' },
+  { label: '关于迅雷', href: '/about/' },
 ];
 
 export const heroLeftNav: NavLink[] = [
-  { label: 'Missions', href: '/missions/' },
-  { label: 'Explore', href: '/reports/' },
-  { label: 'Science', href: '/science/' },
+  { label: '研究方向', href: '/missions/' },
+  { label: '竞赛成果', href: '/reports/' },
+  { label: '技术专题', href: '/notes/' },
 ];
 
 export const heroRightNav: NavLink[] = [
-  { label: 'Technology', href: '/technology/' },
-  { label: 'News', href: '/news/' },
-  { label: 'About', href: '/about/' },
+  { label: '实验室动态', href: '/news/' },
+  { label: '培养体系', href: '/science/' },
+  { label: '关于迅雷', href: '/about/' },
 ];
 
 export const mobileNav: NavLink[] = [...heroLeftNav, ...heroRightNav];
 
 export const heroContent: HeroContent = {
-  eyebrow: 'THE BOUNDARY IS',
+  eyebrow: '把想法，做成会跑的工程。',
+  title: '迅雷实验室',
   paragraph:
-    'We stand at the precipice of the infinite. AEON exists to push human ambition beyond the heliosphere, seeking answers in the dark, and bringing the light of understanding back home.',
+    '山东工商学院信息与电子工程学院的科创实践平台，房间在西校区实验楼 5401。名字来自学校最早的智能车参赛队伍"迅雷队"——我们从 C 语言、单片机和电路基础出发，把原理图、代码与机械结构，反复打磨成能在赛道上稳定运行的作品。',
   primaryCta: {
     href: '/missions/',
-    label: 'Explore Missions',
+    label: '查看研究方向',
   },
   secondaryCta: {
-    href: '/science/',
-    label: 'Our Science',
+    href: '/about/',
+    label: '了解实验室',
   },
-  utilityLabel: 'EST. 2024',
+  utilityLabel: 'SDTBU / 信电学院 · 5401',
 };
 
 export const stats: StatBlockProps[] = [
-  { value: '14', label: 'Active Missions' },
-  { value: '4,200', label: 'Hours in Void' },
-  { value: '8', label: 'Planets Surveyed' },
-  { value: '2.4B', label: 'Miles Traveled' },
+  { value: '16', label: '年竞赛积累（2010 年起）' },
+  { value: '1', label: '第二十一届国家一等奖' },
+  { value: '3', label: '第二十一届国赛队伍' },
+  { value: '100%', label: '国赛队伍获奖率' },
 ];
 
 export const footerMeta: FooterMeta = {
-  title: 'AEON',
+  title: '迅雷实验室',
   description:
-    'Government-backed deep space exploration agency. Pushing the boundaries of human ambition and scientific discovery.',
+    '山东工商学院信息与电子工程学院学生科创开放实验室。以智能车竞赛、电子设计竞赛和机器人项目为主线，训练嵌入式开发、电路设计、控制算法与结构研发能力。',
 };
 
 export const footerDirectory: NavLink[] = [...siteNav];
 
-export const footerPolicies: string[] = ['Privacy', 'Terms', 'Classified'];
+export const footerPolicies: string[] = ['公开课报名', '招新说明', '信电学院官网'];
