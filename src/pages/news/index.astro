@@ -1,15 +1,36 @@
 ---
+import { readdirSync } from 'node:fs';
+import path from 'node:path';
+
 import SiteLayout from '../../layouts/SiteLayout.astro';
 
 const videoExtensions = new Set(['.mp4', '.webm', '.ogg', '.mov']);
-const videoModules = import.meta.glob('/public/vdso/*', { eager: true, query: '?url', import: 'default' }) as Record<string, string>;
-const videoFiles = Object.entries(videoModules)
-  .filter(([filePath]) => videoExtensions.has(filePath.slice(filePath.lastIndexOf('.')).toLowerCase()))
-  .map(([filePath, url]) => ({
-    name: filePath.slice(filePath.lastIndexOf('/') + 1),
-    url,
-  }))
-  .sort((left, right) => left.name.localeCompare(right.name, undefined, { numeric: true, sensitivity: 'base' }));
+
+/**
+ * public/ 下的文件本来就由 Astro 原样复制到 dist。
+ * 之前用 import.meta.glob('/public/vdso/*', { query: '?url' }) 又让资源管线
+ * 把同一批视频复制进 _astro/，21MiB 的视频因此变成 42MiB。
+ * 这里改成构建期直接读目录，URL 就是公开路径本身，只有一份。
+ */
+const videoDirectory = path.join(process.cwd(), 'public', 'vdso');
+
+function listFiles(directory: string) {
+  try {
+    return readdirSync(directory, { withFileTypes: true })
+      .filter((entry) => entry.isFile())
+      .map((entry) => entry.name);
+  } catch {
+    return [];
+  }
+}
+
+const videoFiles = listFiles(videoDirectory)
+  .filter((name) => videoExtensions.has(path.extname(name).toLowerCase()))
+  .sort((left, right) => left.localeCompare(right, undefined, { numeric: true, sensitivity: 'base' }))
+  .map((name) => ({
+    name,
+    url: `/vdso/${encodeURIComponent(name)}`,
+  }));
 
 function getVideoType(fileName: string) {
   const extension = fileName.slice(fileName.lastIndexOf('.') + 1).toLowerCase();
