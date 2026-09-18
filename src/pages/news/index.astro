@@ -52,7 +52,7 @@ function getVideoType(fileName: string) {
           {videoFiles.map((video, index) => (
             <article class="video-card group">
               <div class="video-card-frame">
-                <video controls preload="metadata" playsinline>
+                <video controls preload="none" playsinline>
                   <source src={video.url} type={getVideoType(video.name)} />
                   您的浏览器不支持视频播放。
                 </video>
