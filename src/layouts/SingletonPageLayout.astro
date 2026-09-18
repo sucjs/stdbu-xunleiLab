@@ -5,21 +5,48 @@ interface Highlight { label: string; value: string; }
 interface Props {
   description?: string;
   eyebrow: string;
+  heroEffect?: 'training' | 'engineering';
   highlights?: Highlight[];
   image?: string;
   summary: string;
   title: string;
 }
 
-const { description, eyebrow, highlights = [], image, summary, title } = Astro.props;
+const { description, eyebrow, heroEffect, highlights = [], image, summary, title } = Astro.props;
 ---
 
 <SiteLayout title={`${title} | 迅雷实验室`} description={description ?? summary}>
   <main class="mx-auto max-w-7xl px-6 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
-    <section class={`relative isolate overflow-hidden border border-lab-line ${image ? 'min-h-[430px] sm:min-h-[540px]' : 'p-8 sm:p-10 lg:p-14'}`}>
-      {image ? <img src={image} alt={title} class="absolute inset-0 h-full w-full object-cover opacity-55" /> : null}
-      {image ? <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,10,11,0.94),rgba(8,10,11,0.55)_65%,rgba(8,10,11,0.68))]" /> : null}
-      <div class={`relative z-10 ${image ? 'flex min-h-[430px] items-end p-8 sm:min-h-[540px] sm:p-10 lg:p-14' : ''}`}>
+    <section class={`singleton-hero singleton-hero-${heroEffect ?? 'image'} relative isolate overflow-hidden border border-lab-line ${image || heroEffect ? 'min-h-[430px] sm:min-h-[540px]' : 'p-8 sm:p-10 lg:p-14'}`}>
+      {image ? <img src={image} alt={title} class="singleton-hero-image absolute inset-0 h-full w-full object-cover" /> : null}
+      {image ? <div class="singleton-hero-scrim absolute inset-0" /> : null}
+      {heroEffect === 'training' ? (
+        <div class="training-effect absolute inset-0" aria-hidden="true">
+          <div class="training-effect-line training-effect-line-main" />
+          <div class="training-effect-line training-effect-line-branch" />
+          {['01 基础', '02 模块', '03 项目', '04 赛场'].map((stage, index) => (
+            <div class="training-effect-node" style={`--node-index: ${index}`}>
+              <span>{stage}</span>
+            </div>
+          ))}
+        </div>
+      ) : null}
+      {heroEffect === 'engineering' ? (
+        <div class="engineering-effect absolute inset-0" aria-hidden="true">
+          <div class="engineering-effect-grid" />
+          <div class="engineering-effect-board">
+            <span class="engineering-effect-chip">STM32</span>
+            <span class="engineering-effect-pin pin-one" />
+            <span class="engineering-effect-pin pin-two" />
+            <span class="engineering-effect-pin pin-three" />
+            <span class="engineering-effect-pin pin-four" />
+          </div>
+          <div class="engineering-effect-trace trace-one" />
+          <div class="engineering-effect-trace trace-two" />
+          <div class="engineering-effect-pulse" />
+        </div>
+      ) : null}
+      <div class={`relative z-10 ${image || heroEffect ? 'flex min-h-[430px] items-end p-8 sm:min-h-[540px] sm:p-10 lg:p-14' : ''}`}>
         <div class="max-w-5xl">
           <p class="font-mono text-[10px] tracking-[0.2em] text-lab-accent">{eyebrow}</p>
           <h1 class="mt-5 max-w-4xl font-display text-[clamp(3rem,7vw,7rem)] leading-[0.9] tracking-[-0.06em] text-white">{title}</h1>

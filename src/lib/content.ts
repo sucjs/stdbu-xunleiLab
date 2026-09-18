@@ -12,7 +12,6 @@ import { formatReadingTime } from './format';
 export type MissionEntry = CollectionEntry<'missions'>;
 export type ReportEntry = CollectionEntry<'reports'>;
 export type DepartureEntry = CollectionEntry<'departures'>;
-export type NewsEntry = CollectionEntry<'news'>;
 export type NoteEntry = CollectionEntry<'notes'>;
 export type PageEntry = CollectionEntry<'pages'>;
 export type SingletonPageId = 'about' | 'science' | 'technology';
@@ -40,11 +39,6 @@ export async function getReportEntries() {
 export async function getDepartureEntries() {
   const entries = await getCollection('departures');
   return entries.sort((left, right) => left.data.order - right.data.order);
-}
-
-export async function getNewsEntries() {
-  const entries = await getCollection('news');
-  return entries.sort((left, right) => right.data.publishedAt.getTime() - left.data.publishedAt.getTime());
 }
 
 export async function getPageEntry(id: SingletonPageId) {

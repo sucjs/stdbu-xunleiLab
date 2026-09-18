@@ -7,7 +7,7 @@ import LabSourcesSection from '../components/LabSourcesSection.astro';
 import LabStorySection from '../components/LabStorySection.astro';
 import MissionsSection from '../components/MissionsSection';
 import NotesSection from '../components/NotesSection.astro';
-import StatsSection from '../components/StatsSection';
+import PageLoader from '../components/PageLoader.astro';
 import {
   footerDirectory,
   footerMeta,
@@ -16,7 +16,6 @@ import {
   heroLeftNav,
   heroRightNav,
   mobileNav,
-  stats,
 } from '../data/site';
 import {
   getDepartureEntries,
@@ -82,6 +81,7 @@ const featuredDeparture = departureEntries[0];
     <title>迅雷实验室 · 山东工商学院信息与电子工程学院</title>
   </head>
   <body class="bg-page-bg antialiased">
+    <PageLoader />
     <main class="site-shell overflow-x-clip">
       <HeroShell
         client:load
@@ -99,7 +99,6 @@ const featuredDeparture = departureEntries[0];
           content={toDiscoveryContent(featuredReport)}
         />
       ) : null}
-      <StatsSection client:visible stats={stats} />
       {featuredDeparture ? (
         <DepartureSection
           client:visible

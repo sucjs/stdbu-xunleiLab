@@ -1,5 +1,6 @@
 ---
 import CollectionIndexLayout from '../../layouts/CollectionIndexLayout.astro';
+import { siteSettings } from '../../data/site';
 import { getDepartureEntries } from '../../lib/content';
 
 const departures = await getDepartureEntries();
@@ -10,6 +11,8 @@ const departures = await getDepartureEntries();
   eyebrow="Intake Process / 04"
   intro="公开课、笔试、面试和阶段性考核，帮助你在加入前了解实验室，也帮助团队找到愿意认真做工程的人。"
   description="了解迅雷实验室的公开课、笔试、面试和阶段性考核流程。"
+  actionHref={siteSettings.recruitmentGroupUrl}
+  actionLabel={siteSettings.recruitmentGroupLabel}
 >
   <div class="grid gap-0 border-t border-lab-line">
     {departures.map((entry, index) => (

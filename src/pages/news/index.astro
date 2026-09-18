@@ -1,46 +1,55 @@
 ---
 import SiteLayout from '../../layouts/SiteLayout.astro';
-import { getNewsEntries, getReadingTimeLabel } from '../../lib/content';
-import { formatLongDate } from '../../lib/format';
 
-const newsEntries = await getNewsEntries();
-const [leadStory, ...otherStories] = newsEntries;
+const videoExtensions = new Set(['.mp4', '.webm', '.ogg', '.mov']);
+const videoModules = import.meta.glob('/public/vdso/*', { eager: true, query: '?url', import: 'default' }) as Record<string, string>;
+const videoFiles = Object.entries(videoModules)
+  .filter(([filePath]) => videoExtensions.has(filePath.slice(filePath.lastIndexOf('.')).toLowerCase()))
+  .map(([filePath, url]) => ({
+    name: filePath.slice(filePath.lastIndexOf('/') + 1),
+    url,
+  }))
+  .sort((left, right) => left.name.localeCompare(right.name, undefined, { numeric: true, sensitivity: 'base' }));
+
+function getVideoType(fileName: string) {
+  const extension = fileName.slice(fileName.lastIndexOf('.') + 1).toLowerCase();
+  return extension === 'mov' ? 'video/quicktime' : `video/${extension}`;
+}
 ---
 
-<SiteLayout title="实验室动态" description="迅雷实验室的招新通知、竞赛成果和项目动态。">
+<SiteLayout title="实验室动态" description="迅雷实验室的实验记录、竞赛现场和项目过程视频。">
   <main class="mx-auto max-w-7xl px-6 py-16 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
     <section class="max-w-4xl">
-      <p class="font-mono text-[10px] tracking-[0.2em] text-lab-accent">FIELD NOTES / 03</p>
+      <p class="font-mono text-[10px] tracking-[0.2em] text-lab-accent">VIDEO LOG / 03</p>
       <h1 class="mt-5 font-display text-[clamp(3rem,7vw,7rem)] leading-[0.9] tracking-[-0.06em] text-white">实验室动态</h1>
-      <p class="mt-7 max-w-3xl text-lg leading-8 text-white/62 sm:text-xl">记录我们正在做的项目、比赛中的结果，以及每一届成员从零开始建立工程能力的过程。</p>
+      <p class="mt-7 max-w-3xl text-lg leading-8 text-white/62 sm:text-xl">记录实验室里的调试、训练、比赛和项目过程。</p>
     </section>
 
-    {leadStory ? (
-      <a href={`/news/${leadStory.id}/`} class="group relative isolate mt-14 block min-h-[450px] overflow-hidden border border-lab-line sm:min-h-[560px]">
-        <img src={leadStory.data.image} alt={leadStory.data.title} class="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-[1.02]" />
-        <div class="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,10,11,0.95),rgba(8,10,11,0.46)_62%,rgba(8,10,11,0.72))]" />
-        <div class="relative z-10 flex min-h-[450px] items-end p-8 sm:min-h-[560px] sm:p-12">
-          <div class="max-w-4xl">
-            <div class="flex flex-wrap gap-3 font-mono text-[10px] tracking-[0.12em] text-white/48"><span class="text-lab-accent">{leadStory.data.desk}</span><span>/</span><span>{formatLongDate(leadStory.data.publishedAt)}</span><span>/</span><span>{getReadingTimeLabel(leadStory.body)}</span></div>
-            <h2 class="mt-6 font-display text-[clamp(2.4rem,5vw,5.6rem)] leading-[0.94] tracking-[-0.055em] text-white">{leadStory.data.title}</h2>
-            <p class="mt-6 max-w-3xl text-[1.06rem] leading-8 text-white/68">{leadStory.data.summary}</p>
-            <span class="mt-9 inline-flex items-center gap-3 font-mono text-[11px] tracking-[0.12em] text-lab-accent transition-colors duration-300 group-hover:text-white">阅读动态 <span aria-hidden="true">↗</span></span>
-          </div>
+    <section class="video-archive mt-14">
+      {videoFiles.length ? (
+        <div class="grid gap-6 md:grid-cols-2">
+          {videoFiles.map((video, index) => (
+            <article class="video-card group">
+              <div class="video-card-frame">
+                <video controls preload="metadata" playsinline>
+                  <source src={video.url} type={getVideoType(video.name)} />
+                  您的浏览器不支持视频播放。
+                </video>
+                <span class="video-card-index">VIDEO / {String(index + 1).padStart(2, '0')}</span>
+              </div>
+              <div class="mt-4 flex items-center justify-between gap-4">
+                <h2 class="font-display text-2xl text-white">{video.name.replace(/\.[^.]+$/, '')}</h2>
+                <span class="font-mono text-[10px] tracking-[0.12em] text-lab-accent">PLAYBACK</span>
+              </div>
+            </article>
+          ))}
         </div>
-      </a>
-    ) : null}
-
-    {otherStories.length ? (
-      <section class="mt-8 grid gap-6 lg:grid-cols-2">
-        {otherStories.map((entry) => (
-          <a href={`/news/${entry.id}/`} class="group border border-lab-line bg-white/[0.03] p-7 transition-colors duration-300 hover:border-lab-accent sm:p-8">
-            <div class="flex flex-wrap gap-3 font-mono text-[10px] tracking-[0.12em] text-white/42"><span class="text-lab-accent">{entry.data.desk}</span><span>/</span><span>{formatLongDate(entry.data.publishedAt)}</span></div>
-            <h2 class="mt-5 font-display text-3xl leading-[1.05] tracking-[-0.04em] text-white">{entry.data.title}</h2>
-            <p class="mt-5 text-[1.02rem] leading-8 text-white/62">{entry.data.summary}</p>
-            <div class="mt-7 flex items-center justify-between font-mono text-[10px] tracking-[0.1em] text-white/42"><span>{entry.data.author}</span><span class="text-lab-accent transition-transform duration-300 group-hover:translate-x-1">↗</span></div>
-          </a>
-        ))}
-      </section>
-    ) : null}
+      ) : (
+        <div class="video-empty border border-dashed border-lab-line p-10 text-center">
+          <p class="font-mono text-sm tracking-[0.1em] text-lab-accent">NO VIDEO SIGNAL</p>
+          <p class="mt-4 text-white/58">将 mp4、webm、ogg 或 mov 视频放入 public/vdso 后刷新页面。</p>
+        </div>
+      )}
+    </section>
   </main>
 </SiteLayout>

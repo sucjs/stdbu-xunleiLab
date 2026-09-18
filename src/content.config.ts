@@ -46,18 +46,6 @@ const departures = defineCollection({
   }),
 });
 
-const news = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/news' }),
-  schema: z.object({
-    title: z.string(),
-    summary: z.string(),
-    publishedAt: z.coerce.date(),
-    author: z.string(),
-    desk: z.string(),
-    image: z.string().default('/images/lab-news.svg'),
-  }),
-});
-
 const notes = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/notes' }),
   schema: z.object({
@@ -91,7 +79,6 @@ export const collections = {
   missions,
   reports,
   departures,
-  news,
   notes,
   pages,
 };

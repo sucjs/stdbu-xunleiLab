@@ -25,11 +25,6 @@ export interface SpectrumBarProps {
   value: number;
 }
 
-export interface StatBlockProps {
-  label: string;
-  value: string;
-}
-
 export interface LaunchRowProps {
   date: string;
   detail: string;
@@ -62,6 +57,11 @@ export interface FooterMeta {
   title: string;
 }
 
+export const siteSettings = {
+  recruitmentGroupLabel: '加入纳新群',
+  recruitmentGroupUrl: 'https://qm.qq.com/q/fxcBD1NNeg',
+};
+
 export const siteNav: NavLink[] = [
   { label: '研究方向', href: '/missions/' },
   { label: '竞赛成果', href: '/reports/' },
@@ -91,7 +91,7 @@ export const heroContent: HeroContent = {
   eyebrow: '把想法，做成会跑的工程。',
   title: '迅雷实验室',
   paragraph:
-    '山东工商学院信息与电子工程学院的科创实践平台，房间在西校区实验楼 5401。名字来自学校最早的智能车参赛队伍"迅雷队"——我们从 C 语言、单片机和电路基础出发，把原理图、代码与机械结构，反复打磨成能在赛道上稳定运行的作品。',
+    '山东工商学院信息与电子工程学院的科创实践平台，位于西校区实验楼 5401。名字来自学校最早的智能车参赛队伍"迅雷队"——我们从 C 语言、单片机和电路基础出发，把原理图、代码与机械结构，反复打磨成能在赛道上稳定运行的作品。',
   primaryCta: {
     href: '/missions/',
     label: '查看研究方向',
@@ -100,15 +100,8 @@ export const heroContent: HeroContent = {
     href: '/about/',
     label: '了解实验室',
   },
-  utilityLabel: 'SDTBU / 信电学院 · 5401',
+  utilityLabel: 'SDTBU —— ThunderLab',
 };
-
-export const stats: StatBlockProps[] = [
-  { value: '16', label: '年竞赛积累（2010 年起）' },
-  { value: '1', label: '第二十一届国家一等奖' },
-  { value: '3', label: '第二十一届国赛队伍' },
-  { value: '100%', label: '国赛队伍获奖率' },
-];
 
 export const footerMeta: FooterMeta = {
   title: '迅雷实验室',

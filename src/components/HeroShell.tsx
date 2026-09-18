@@ -1,6 +1,6 @@
 import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
 import { ArrowDown, Menu, X } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 
 import type { HeroContent, NavLink } from '../data/site';
 import BrandLogo from './BrandLogo';
@@ -13,6 +13,23 @@ interface HeroShellProps {
   mobileNav: NavLink[];
   rightNav: NavLink[];
 }
+
+const codeLines = [
+  'const signal = await bus.read(0x5401);',
+  'if (signal.phase === "stable") return launch();',
+  'motor.pid({ kp: 1.42, ki: 0.08, kd: 0.31 });',
+  'const vector = imu.fuse(gyro, encoder, compass);',
+  'telemetry.push({ t: now(), vector, current });',
+  'for (const node of mesh.active()) node.sync();',
+  'scope.trace("control.loop", performance.now());',
+  'await rover.calibrate({ axis: "yaw", samples: 64 });',
+  'const target = vision.track(frame, threshold);',
+  'radio.write(packet.encode({ id: 0x026, crc: true }));',
+  'if (battery.voltage < 11.4) mode = "return";',
+  'mission.state = observe("track", horizon);',
+  'export default firmware({ board: "THUNDER-5401" });',
+  '>>> SYSTEM READY / LOOP 026 / SIGNAL LOCKED',
+];
 
 /**
  * 探针光斑：把指针位置写成 CSS 变量，标题的铜色层由圆形遮罩揭开。
@@ -67,19 +84,30 @@ export default function HeroShell({
   rightNav,
 }: HeroShellProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const heroRef = useProbeLayer<HTMLElement>();
   const probeRef = useProbeLayer<HTMLDivElement>();
 
   return (
     <MotionConfig reducedMotion="user">
-      <section className="lab-hero relative min-h-[100svh] overflow-hidden">
-        <img
-          src="/images/lab-hero.svg"
-          alt=""
-          aria-hidden="true"
-          className="lab-hero-image absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="lab-hero-scrim absolute inset-0" />
-        <div className="lab-hero-grid absolute inset-0" aria-hidden="true" />
+      <section ref={heroRef} className="lab-hero probe-idle relative min-h-[100svh] overflow-hidden">
+        <div className="code-stream absolute inset-0" aria-hidden="true">
+          <div className="code-stream-column code-stream-column-a">
+            {codeLines.map((line, index) => (
+              <span key={`a-${index}`} style={{ '--line-index': index } as CSSProperties}>{line}</span>
+            ))}
+          </div>
+          <div className="code-stream-column code-stream-column-b">
+            {[...codeLines].reverse().map((line, index) => (
+              <span key={`b-${index}`} style={{ '--line-index': index } as CSSProperties}>{line}</span>
+            ))}
+          </div>
+          <div className="code-stream-column code-stream-column-c">
+            {codeLines.slice(2).map((line, index) => (
+              <span key={`c-${index}`} style={{ '--line-index': index } as CSSProperties}>{line}</span>
+            ))}
+          </div>
+        </div>
+        <div className="code-stream-scan absolute inset-0" aria-hidden="true" />
 
         <div className="relative z-10 flex min-h-[100svh] flex-col px-5 py-5 sm:px-8 lg:px-12">
           <header className="hero-rise flex items-center justify-between border-b border-white/15 pb-5" style={{ animationDelay: '40ms' }}>

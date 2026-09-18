@@ -1,6 +1,7 @@
 ---
 import FooterSection from '../components/FooterSection';
 import BrandLogo from '../components/BrandLogo';
+import PageLoader from '../components/PageLoader.astro';
 import ThemeToggle from '../components/ThemeToggle';
 import { footerDirectory, footerMeta, footerPolicies, siteNav } from '../data/site';
 import '../styles/global.css';
@@ -51,6 +52,7 @@ function isActivePath(path: string) {
     <title>{title}</title>
   </head>
   <body class="bg-page-bg antialiased">
+    <PageLoader />
     <div class="site-shell min-h-screen overflow-x-clip">
       <header
         data-site-header

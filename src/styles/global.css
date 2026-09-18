@@ -144,6 +144,98 @@ body {
   transition: background-color 320ms ease, color 320ms ease;
 }
 
+.page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: grid;
+  place-items: center;
+  background: var(--ground-base);
+  color: var(--body-strong);
+  opacity: 1;
+  transition: opacity 480ms ease, visibility 480ms ease;
+}
+
+.page-loader-hidden {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.page-loader-inner {
+  display: grid;
+  justify-items: center;
+  width: min(19rem, calc(100vw - 3rem));
+}
+
+.page-loader-mark {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  height: 3rem;
+}
+
+.page-loader-mark span {
+  display: block;
+  width: 0.3rem;
+  height: 1.2rem;
+  background: var(--accent);
+  transform-origin: center;
+  animation: loader-pulse 900ms ease-in-out infinite;
+}
+
+.page-loader-mark span:nth-child(2) {
+  height: 2.2rem;
+  animation-delay: 140ms;
+}
+
+.page-loader-mark span:nth-child(3) {
+  height: 1.65rem;
+  animation-delay: 280ms;
+}
+
+.page-loader-inner p {
+  margin-top: 1.5rem;
+  color: var(--body-soft);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.16em;
+}
+
+.page-loader-progress {
+  position: relative;
+  width: 100%;
+  height: 1px;
+  margin-top: 1.25rem;
+  overflow: hidden;
+  background: var(--line-subtle);
+}
+
+.page-loader-progress span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 38%;
+  background: var(--accent);
+  animation: loader-progress 1.8s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+@keyframes loader-pulse {
+  0%, 100% { opacity: 0.35; transform: scaleY(0.65); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+@keyframes loader-progress {
+  0% { transform: translateX(-130%); }
+  100% { transform: translateX(360%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-loader-mark span,
+  .page-loader-progress span {
+    animation: none;
+  }
+}
+
 img {
   display: block;
 }
@@ -277,7 +369,7 @@ img {
 .lab-hero {
   position: relative;
   background: var(--ground-base);
-  color: #edefe8;
+  color: var(--body-strong);
 }
 
 /* 首屏入场：纯 CSS，不依赖 JS 水合。
@@ -306,45 +398,110 @@ img {
 }
 
 .hero-cta:hover {
-  background: #edefe8;
-  color: #0c100f;
+  background: var(--body-strong);
+  color: var(--accent-contrast);
 }
 
 .lab-hero {
   position: relative;
-  /* 首屏是深色观测台，两套主题下都保持深底，
-     否则浅色主题里浅底 + 浅字会完全读不出来。
-     所以这里把整套文字色 / 强调色都钉在深色方案上。 */
-  background: #0c100f;
-  color: #edefe8;
-  --accent: #c4863a;
-  --accent-contrast: #0c100f;
-  --color-lab-accent: #c4863a;
-  --color-accent-blue: #c4863a;
-  --color-warm-gold: #c4863a;
-  --body-strong: #edefe8;
-  --body-muted: rgba(237, 239, 232, 0.66);
-  --line-subtle: rgba(237, 239, 232, 0.15);
-  --panel-tint: rgba(237, 239, 232, 0.04);
+  background: var(--ground-base);
+  color: var(--body-strong);
 }
 
-.lab-hero-image {
-  filter: saturate(0.6) contrast(1.15);
+.code-stream {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(2rem, 7vw, 9rem);
+  padding: 12rem clamp(1.25rem, 8vw, 9rem) 4rem;
+  overflow: hidden;
+  color: rgba(237, 239, 232, 0.32);
+  font-family: var(--font-mono);
+  font-size: clamp(0.65rem, 0.8vw, 0.82rem);
+  line-height: 2.4;
+  mask-image: radial-gradient(circle 230px at var(--probe-x, 50%) var(--probe-y, 50%), #000 0%, rgba(0, 0, 0, 0.72) 34%, rgba(0, 0, 0, 0.2) 68%, transparent 100%);
+  opacity: 0.95;
+  animation: code-breathe 7s ease-in-out infinite;
+  transition: opacity 450ms ease;
 }
 
-.lab-hero-scrim {
+.lab-hero:not(.probe-idle) .code-stream {
+  opacity: 1;
+}
+
+.code-stream-column {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+.code-stream-column span {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  animation: code-drift 18s linear infinite, code-flicker 5.5s ease-in-out infinite;
+  animation-delay: calc(var(--line-index) * -1.35s);
+}
+
+.code-stream-column span:nth-child(3n) {
+  color: color-mix(in srgb, var(--accent) 76%, transparent);
+}
+
+.code-stream-column-a {
+  transform: translateY(-5rem) rotate(-7deg);
+}
+
+.code-stream-column-b {
+  transform: translateY(3rem) rotate(-7deg);
+}
+
+.code-stream-column-c {
+  transform: translateY(-8rem) rotate(-7deg);
+}
+
+.code-stream-scan {
+  pointer-events: none;
   background:
-    linear-gradient(100deg, rgba(6, 9, 8, 0.96) 0%, rgba(6, 9, 8, 0.78) 46%, rgba(6, 9, 8, 0.42) 100%),
-    linear-gradient(0deg, rgba(6, 9, 8, 0.86), transparent 44%);
+    linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--accent) 13%, transparent) 50%, transparent 100%) 0 0 / 100% 16rem no-repeat,
+    repeating-linear-gradient(0deg, transparent 0 5px, color-mix(in srgb, var(--body-strong) 4%, transparent) 6px, transparent 7px);
+  mask-image: linear-gradient(to bottom, transparent, #000 20%, #000 80%, transparent);
+  opacity: 0.45;
+  animation: scan-sweep 8s linear infinite;
 }
 
-.lab-hero-grid {
-  background-image:
-    linear-gradient(rgba(230, 232, 222, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(230, 232, 222, 0.07) 1px, transparent 1px);
-  background-size: 6rem 6rem;
-  mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), transparent 72%);
-  opacity: 0.5;
+@keyframes code-drift {
+  0% { transform: translateX(0); opacity: 0.4; }
+  45% { opacity: 0.82; }
+  100% { transform: translateX(1.5rem); opacity: 0.4; }
+}
+
+@keyframes code-breathe {
+  0%, 100% { opacity: 0.38; }
+  50% { opacity: 0.78; }
+}
+
+@keyframes code-flicker {
+  0%, 100% { filter: brightness(0.84); }
+  48% { filter: brightness(1); }
+  55% { filter: brightness(0.68); }
+}
+
+@keyframes scan-sweep {
+  from { background-position: 0 -16rem, 0 0; }
+  to { background-position: 0 100%, 0 0; }
+}
+
+html[data-theme='light'] .code-stream {
+  color: rgba(16, 20, 19, 0.32);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .code-stream,
+  .code-stream-column span,
+  .code-stream-scan {
+    animation: none;
+  }
 }
 
 /* 探针光斑：标题两层叠印，上层铜色被鼠标位置的圆形遮罩揭开。
@@ -403,13 +560,13 @@ img {
   }
 
   .probe-dim {
-    color: #edefe8;
+    color: var(--body-strong);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .probe-dim {
-    color: #edefe8;
+    color: var(--body-strong);
   }
 
   .probe-lit {
@@ -544,7 +701,7 @@ img {
 }
 
 .theme-toggle-hero {
-  color: #edefe8;
+  color: var(--body-strong);
 }
 
 .theme-toggle-shell {
@@ -645,17 +802,249 @@ summary:focus-visible {
    其它保留类
    ========================================================================== */
 
-.lab-evidence {
-  border: 1px solid var(--line-subtle);
-  background: var(--panel-tint);
+.singleton-hero-training,
+.singleton-hero-engineering {
+  background: var(--ground-sunken);
 }
 
-.lab-evidence-overlay {
-  display: none;
+.singleton-hero-image {
+  filter: saturate(0.78) contrast(1.08) brightness(0.72);
+  opacity: 0.62;
+  transition: filter 320ms ease, opacity 320ms ease;
 }
 
-.lab-chart-card {
+.singleton-hero-scrim {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--ground-base) 94%, transparent), color-mix(in srgb, var(--ground-base) 56%, transparent) 65%, color-mix(in srgb, var(--ground-base) 72%, transparent));
+  transition: background 320ms ease;
+}
+
+html[data-theme='light'] .singleton-hero-image {
+  filter: saturate(0.72) contrast(0.98) brightness(1.06);
+  opacity: 0.72;
+}
+
+html[data-theme='light'] .singleton-hero-scrim {
+  background: linear-gradient(90deg, color-mix(in srgb, var(--ground-base) 86%, transparent), color-mix(in srgb, var(--ground-base) 38%, transparent) 65%, color-mix(in srgb, var(--ground-base) 54%, transparent));
+}
+
+.training-effect,
+.engineering-effect {
+  pointer-events: none;
+  opacity: 0.82;
+}
+
+.training-effect {
+  background:
+    radial-gradient(circle at 82% 25%, color-mix(in srgb, var(--accent) 14%, transparent), transparent 26%),
+    linear-gradient(115deg, transparent 0 54%, color-mix(in srgb, var(--body-strong) 5%, transparent) 54.1%, transparent 54.3%);
+}
+
+.training-effect-line {
+  position: absolute;
+  height: 1px;
+  background: var(--line-subtle);
+  transform-origin: left center;
+}
+
+.training-effect-line-main {
+  top: 63%;
+  left: 44%;
+  width: 57%;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--line-subtle));
+  transform: rotate(-13deg);
+}
+
+.training-effect-line-branch {
+  top: 63%;
+  left: 58%;
+  width: 30%;
+  transform: rotate(26deg);
+}
+
+.training-effect-node {
+  position: absolute;
+  top: calc(63% - (var(--node-index) * 5.6%));
+  left: calc(51% + (var(--node-index) * 11%));
+  display: grid;
+  width: 1rem;
+  height: 1rem;
+  place-items: center;
+  border: 1px solid var(--accent);
+  background: var(--ground-sunken);
+  box-shadow: 0 0 0 5px color-mix(in srgb, var(--accent) 12%, transparent);
+  transform: rotate(45deg);
+  animation: training-node-pulse 3.6s ease-in-out infinite;
+  animation-delay: calc(var(--node-index) * 520ms);
+}
+
+.training-effect-node span {
+  position: absolute;
+  left: 1.2rem;
+  top: -0.15rem;
+  width: max-content;
+  color: var(--body-muted);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  transform: rotate(-45deg) translateY(-1rem);
+}
+
+@keyframes training-node-pulse {
+  0%, 100% { opacity: 0.42; }
+  50% { opacity: 1; box-shadow: 0 0 0 8px color-mix(in srgb, var(--accent) 4%, transparent); }
+}
+
+.engineering-effect {
+  background: radial-gradient(circle at 78% 48%, color-mix(in srgb, var(--accent) 13%, transparent), transparent 30%);
+}
+
+.engineering-effect-grid {
+  position: absolute;
+  inset: 12% 7% 10% 47%;
+  background-image:
+    linear-gradient(var(--line-subtle) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-subtle) 1px, transparent 1px);
+  background-size: 2.4rem 2.4rem;
+  mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
+  opacity: 0.55;
+}
+
+.engineering-effect-board {
+  position: absolute;
+  top: 28%;
+  left: 65%;
+  display: grid;
+  width: clamp(8rem, 17vw, 13rem);
+  aspect-ratio: 1.35;
+  place-items: center;
+  border: 1px solid var(--accent);
+  background: color-mix(in srgb, var(--ground-base) 78%, transparent);
+  box-shadow: 0 0 0 0.45rem color-mix(in srgb, var(--accent) 7%, transparent), inset 0 0 2rem color-mix(in srgb, var(--accent) 9%, transparent);
+  transform: rotate(-9deg);
+  animation: board-flicker 5s ease-in-out infinite;
+}
+
+.engineering-effect-chip {
+  padding: 0.55rem 0.8rem;
   border: 1px solid var(--line-subtle);
+  color: var(--body-strong);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+}
+
+.engineering-effect-pin {
+  position: absolute;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 0.3rem color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.pin-one { top: 15%; left: 12%; }
+.pin-two { top: 15%; right: 12%; }
+.pin-three { bottom: 15%; left: 12%; }
+.pin-four { right: 12%; bottom: 15%; }
+
+.engineering-effect-trace {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent));
+  transform-origin: left center;
+}
+
+.trace-one { top: 49%; left: 44%; width: 21%; transform: rotate(-8deg); }
+.trace-two { top: 62%; left: 76%; width: 18%; transform: rotate(42deg); }
+
+.engineering-effect-pulse {
+  position: absolute;
+  top: 49%;
+  left: 44%;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 1rem var(--accent);
+  animation: signal-pulse 2.8s ease-in-out infinite;
+}
+
+@keyframes board-flicker {
+  0%, 100% { opacity: 0.5; }
+  48% { opacity: 0.86; }
+  52% { opacity: 0.6; }
+}
+
+@keyframes signal-pulse {
+  0% { transform: translateX(0) scale(0.7); opacity: 0.3; }
+  70% { transform: translateX(10rem) scale(1); opacity: 1; }
+  100% { transform: translateX(10rem) scale(0.3); opacity: 0; }
+}
+
+@media (max-width: 48rem) {
+  .training-effect,
+  .engineering-effect {
+    opacity: 0.45;
+  }
+
+  .training-effect-node {
+    left: calc(50% + (var(--node-index) * 12%));
+  }
+
+  .engineering-effect-board {
+    top: 18%;
+    left: 62%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .training-effect-node,
+  .engineering-effect-board,
+  .engineering-effect-pulse {
+    animation: none;
+  }
+}
+
+.video-card {
+  min-width: 0;
+}
+
+.video-card-frame {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line-subtle);
+  background: var(--ground-sunken);
+  transition: border-color 300ms ease, box-shadow 300ms ease;
+}
+
+.video-card:hover .video-card-frame {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 22%, transparent), 0 1.5rem 3rem color-mix(in srgb, var(--ground-sunken) 42%, transparent);
+}
+
+.video-card video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--ground-sunken);
+  object-fit: contain;
+}
+
+.video-card-index {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  padding: 0.35rem 0.5rem;
+  background: color-mix(in srgb, var(--ground-sunken) 88%, transparent);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.12em;
+  pointer-events: none;
+}
+
+.video-empty {
   background: var(--panel-tint);
 }
 

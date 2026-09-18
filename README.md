@@ -1,347 +1,261 @@
-# 🚀 AEON / SPACE
+# 迅雷实验室网站
 
-<div align="center">
+这是山东工商学院信息与电子工程学院迅雷实验室的官方网站，使用 Astro 构建。网站包含研究方向、竞赛成果、技术专题、实验室动态视频、培养体系、设备与技术、关于实验室和加入我们等页面。
 
-<img width="520" alt="AEON / SPACE logo" src="./public/brand/aeon-logo-dark.png" />
+## 快速开始
 
-A cinematic, content-driven space agency website template built with **Astro 6**, **React 19**, **Tailwind CSS 4**, and **Framer Motion**. Designed for editorial space brands, science-forward landing pages, fictional agencies, mission archives, launches, and immersive narrative sites.
-
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![Astro](https://img.shields.io/badge/Astro-6.x-FF5D01?logo=astro&logoColor=white)](https://astro.build)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.x-38B2AC?logo=tailwind-css&logoColor=white)](https://tailwindcss.com)
-[![React](https://img.shields.io/badge/React-19.x-61DAFB?logo=react&logoColor=061826)](https://react.dev)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Framer Motion](https://img.shields.io/badge/Framer_Motion-12.x-0055FF?logo=framer&logoColor=white)](https://motion.dev)
-[![Vercel](https://img.shields.io/badge/Vercel-ready-000000?logo=vercel&logoColor=white)](https://vercel.com)
-[![Cloudflare Workers](https://img.shields.io/badge/Cloudflare_Workers-ready-F38020?logo=cloudflare&logoColor=white)](https://workers.cloudflare.com)
-
-</div>
-
-## Current State
-
-AEON / SPACE is currently a polished Astro template with a responsive home page, typed markdown collections, light/dark mode, theme-aware brand assets, animated statistics, live launch countdowns, and archive/detail pages for missions, reports, news, and departures.
-
-Recent UI state includes:
-
-- Theme-aware AEON wordmark and symbol assets in `public/brand/`
-- Full-bleed cinematic hero with animated star field, angled desktop navigation, mobile menu, and branded center symbol
-- Sticky glassmorphism header on subpages that hides on downward scroll and reveals on upward scroll
-- Light/dark theme toggle with persisted user preference
-- Animated count-up stats section
-- Mission, report, departure, and news collection pages
-- Markdown-powered detail pages with Astro Content Collections
-- Responsive desktop, tablet, and mobile layouts
-- Hover and motion polish for CTAs, archive links, departure rows, and mission cards
-- Footer updated with the full AEON / SPACE wordmark
-- Vercel and Cloudflare Workers deployment compatibility via official Astro adapters
-
-## ✨ Features
-
-- ⚡ **Astro 6 + TypeScript** - Static-first site with typed content schemas
-- ⚛️ **React islands** - Interactive hero, theme toggle, countdown, motion sections, and animated stats
-- 🎨 **Tailwind CSS 4** - Custom theme tokens and light/dark design variables in `src/styles/global.css`
-- 🎬 **Framer Motion** - Hero entrance animation, section reveals, menu motion, count-up triggers, and hover affordances
-- 📝 **Astro Content Collections** - Validated markdown content for all editorial areas
-- 📱 **Responsive Navigation** - Angled desktop hero nav, mobile drawer on home, compact menu on subpages
-- 🪐 **Theme-Aware Branding** - Wordmark and symbol variants for dark and light contexts
-- ⏱️ **Launch Countdown** - Live countdown based on departure frontmatter dates and times
-- 📰 **Editorial Detail Layouts** - Dedicated layouts for reports, missions, news, departures, and singleton pages
-- 🖼️ **Static Assets** - Local image model for replacing agency visuals quickly
-- ☁️ **Deploy-Ready Targets** - Default static build plus explicit Vercel and Cloudflare Workers build scripts
-
-## 🚀 Quick Start
-
-### 📌 Prerequisites
+环境要求：
 
 - Node.js `>= 22.12.0`
 - npm
 
-### 📦 Installation
+安装依赖并启动开发服务：
 
 ```bash
-# Clone the repository
-git clone https://github.com/lauroguedes/aeon-space-agency.git
-
-# Navigate to the project directory
-cd aeon-space-agency
-
-# Install dependencies
 npm install
-
-# Start the development server
 npm run dev
 ```
 
-Visit `http://localhost:4321` to view the site.
+浏览器打开 `http://localhost:4321`。
 
-## 📋 Commands
+常用命令：
 
-All commands are run from the root of the project:
+| 命令 | 用途 |
+| --- | --- |
+| `npm run dev` | 启动开发服务器 |
+| `npm run check` | 检查 Astro、TypeScript 和内容数据 |
+| `npm run build` | 生成生产版本到 `dist/` |
+| `npm run preview` | 预览生产版本 |
+| `npm run build:vercel` | 使用 Vercel 目标构建 |
+| `npm run build:cloudflare` | 使用 Cloudflare 目标构建 |
+| `npm run preview:cloudflare` | 使用 Wrangler 预览 |
+| `npm run deploy:cloudflare` | 构建并部署到 Cloudflare |
 
-| Command | Action |
-| :--- | :--- |
-| `npm install` | Install dependencies |
-| `npm run dev` | Start dev server at `localhost:4321` |
-| `npm run build` | Build the default static production site to `./dist/` |
-| `npm run build:vercel` | Build with the official `@astrojs/vercel` adapter |
-| `npm run build:cloudflare` | Build with the official `@astrojs/cloudflare` adapter for Workers |
-| `npm run preview` | Preview the production build locally |
-| `npm run preview:cloudflare` | Build and preview with Wrangler locally |
-| `npm run deploy:cloudflare` | Build and deploy to Cloudflare Workers with Wrangler |
-| `npm run check` | Run Astro checks |
-| `npm run astro ...` | Run Astro CLI commands |
-
-## 🧰 Tech Stack
-
-| Area | Tooling |
-| :--- | :--- |
-| Framework | Astro 6 |
-| UI Islands | React 19 |
-| Styling | Tailwind CSS 4 |
-| Motion | Framer Motion 12 |
-| Icons | Lucide React |
-| Content | Astro Content Collections |
-| Image Processing | Sharp |
-| Vercel Deploy | `@astrojs/vercel` |
-| Cloudflare Deploy | `@astrojs/cloudflare` + Wrangler |
-| Language | TypeScript |
-
-## ☁️ Deployment
-
-This project keeps `npm run build` as the platform-neutral static build. Platform adapters are activated only by deploy-specific scripts through `ASTRO_DEPLOY_TARGET`.
-
-### ▲ Vercel
-
-Astro can deploy static sites to Vercel with zero configuration. This project also includes `@astrojs/vercel` so the build can opt into Vercel-specific output and future Vercel services.
+修改后建议执行：
 
 ```bash
-npm run build:vercel
+npm run check
+npm run build
 ```
 
-Deploy options:
-
-- Import the repository in the Vercel dashboard and use the default Astro settings.
-- If using the Vercel CLI, run `npm run build:vercel`, then deploy the prebuilt output with Vercel.
-
-### ☁️ Cloudflare Workers
-
-Astro 6 uses `@astrojs/cloudflare` v13+ for Cloudflare Workers. The Astro docs note that the Cloudflare adapter no longer targets Cloudflare Pages; new Cloudflare deployments should use Workers.
-
-Cloudflare files and scripts included:
-
-- `wrangler.jsonc` - Worker entrypoint, compatibility date, static assets binding, and observability
-- `npm run build:cloudflare` - Builds with the Cloudflare adapter
-- `npm run preview:cloudflare` - Builds and starts local Wrangler preview
-- `npm run deploy:cloudflare` - Builds and deploys with Wrangler
-
-Before deploying, authenticate Wrangler:
-
-```bash
-npx wrangler login
-```
-
-Then deploy:
-
-```bash
-npm run deploy:cloudflare
-```
-
-The Cloudflare adapter is configured with `prerenderEnvironment: 'node'` so static prerendering remains compatible with Node-oriented dependencies while the Worker runtime handles deployed output.
-
-## 📂 Project Structure
+## 项目结构
 
 ```text
 aeon-space-agency/
 ├── public/
-│   ├── brand/                 # Theme-aware AEON logo and symbol PNGs
-│   ├── images/                # Site imagery used by content/frontmatter
-│   └── images-src/            # Source SVG illustrations
+│   ├── favicon.ico              # 浏览器图标，也用于页面 Logo 图形
+│   ├── favicon.svg              # SVG favicon
+│   ├── images/                  # 页面内容图片
+│   ├── images-src/              # 图片源文件
+│   └── vdso/                    # 实验室动态视频
 ├── src/
-│   ├── components/            # React islands and reusable UI sections
-│   │   ├── BrandLogo.tsx      # Theme-aware logo/symbol renderer
-│   │   ├── HeroShell.tsx      # Home hero, mobile nav, angled desktop nav
-│   │   ├── StatsSection.tsx   # Count-up stats
-│   │   ├── LaunchCountdown.tsx
-│   │   └── ThemeToggle.tsx
-│   ├── content/               # Markdown content collections
-│   │   ├── departures/
-│   │   ├── missions/
-│   │   ├── news/
-│   │   ├── pages/
-│   │   └── reports/
-│   ├── layouts/               # Shared page and entry layouts
-│   ├── lib/                   # Content mapping and formatting utilities
-│   ├── pages/                 # File-based routes
-│   ├── styles/
-│   │   └── global.css         # Tailwind import, tokens, theme overrides
-│   └── content.config.ts      # Astro content schemas
+│   ├── components/              # React 交互组件和页面区块
+│   ├── content/                 # Markdown 内容
+│   │   ├── departures/          # 加入我们流程
+│   │   ├── missions/            # 研究方向
+│   │   ├── notes/               # 技术专题
+│   │   ├── pages/               # About、Science、Technology 单页
+│   │   └── reports/             # 竞赛成果
+│   ├── data/site.ts             # 导航、首页文案、页脚数据
+│   ├── data/members.ts          # 成员名单和分工
+│   ├── layouts/                 # 公共页面布局
+│   ├── lib/                     # 内容读取和格式化工具
+│   ├── pages/                   # Astro 路由入口
+│   ├── styles/global.css        # 颜色、主题、排版和特效
+│   └── content.config.ts        # Markdown 字段校验
 ├── astro.config.mjs
 ├── package.json
-├── tsconfig.json
-├── wrangler.jsonc
 └── README.md
 ```
 
-## Site Areas
+## 页面路由
 
-### 🏠 Home Page
+| 页面 | 文件 |
+| --- | --- |
+| 首页 | `src/pages/index.astro` |
+| 研究方向 | `src/pages/missions/index.astro` |
+| 竞赛成果 | `src/pages/reports/index.astro` |
+| 技术专题 | `src/pages/notes/index.astro` |
+| 实验室动态视频 | `src/pages/news/index.astro` |
+| 加入我们 | `src/pages/departures/index.astro` |
+| 培养体系 | `src/pages/science.astro` |
+| 设备与技术 | `src/pages/technology.astro` |
+| 关于迅雷 | `src/pages/about.astro` |
 
-The home page is assembled in `src/pages/index.astro` and currently includes:
+详情页使用动态路由，例如：
 
-- `HeroShell` - full-screen hero, star field, AEON logo, mobile menu, angled nav, CTAs
-- `MissionsSection` - active mission preview cards
-- `DiscoverySection` - latest report feature and spectral analysis chart
-- `StatsSection` - animated metrics that count from zero when visible
-- `DepartureSection` - next departure, launch image, live countdown, launch rows
-- `FooterSection` - directory, coordinates, policies, and AEON wordmark
+- `src/pages/missions/[slug].astro`
+- `src/pages/reports/[slug].astro`
+- `src/pages/notes/[slug].astro`
+- `src/pages/departures/[slug].astro`
 
-### 🗄️ Collection Pages
+## 怎么改内容
 
-Collection indexes are generated from markdown content:
+### 改首页文字和导航
 
-- `/missions/`
-- `/reports/`
-- `/news/`
-- `/departures/`
+编辑 [`src/data/site.ts`](src/data/site.ts)：
 
-Each collection also has generated detail routes.
+- `siteNav`：顶部导航
+- `heroLeftNav`、`heroRightNav`：首页 Hero 两侧导航
+- `heroContent`：首页眉题、标题、介绍和按钮
+- `footerMeta`：页脚简介
+- `footerPolicies`：页脚底部链接文字
 
-### 📄 Singleton Pages
+首页区块入口在 [`src/pages/index.astro`](src/pages/index.astro)。
 
-Standalone agency pages live in `src/content/pages/`:
+### 常改配置集中位置
 
-- `/about/`
-- `/science/`
-- `/technology/`
+优先编辑 [`src/data/site.ts`](src/data/site.ts)，这里是网站的集中配置入口：
 
-## 📝 Content Management
+- `siteSettings.recruitmentGroupUrl`：纳新群链接，只需修改这里
+- `siteSettings.recruitmentGroupLabel`：纳新群按钮文字
+- `siteNav`：全站顶部导航及页脚目录
+- `heroLeftNav`、`heroRightNav`：首页 Hero 导航
+- `heroContent`：首页标题、介绍和 CTA 按钮
+- `footerMeta`：页脚名称和简介
+- `footerPolicies`：页脚底部链接文字
 
-All primary content is file-based and stored in `src/content/`. Content is validated by `src/content.config.ts`, so missing or invalid fields surface during development/build.
+页面结构和视觉效果不需要为了修改这些常用内容而改组件文件。
 
-### 🛰️ Missions
+### 改成员名单
 
-Path: `src/content/missions/`
+编辑 [`src/data/members.ts`](src/data/members.ts)。新增成员时复制一个对象，填写姓名、身份和简介：
 
-Important frontmatter:
+```ts
+{
+	name: '成员姓名',
+	role: '成员身份 / 负责方向',
+	note: '成员简介或负责内容。',
+}
+```
 
-- `title`
-- `summary`
-- `status`
-- `statusTone` - `green`, `blue`, or `gold`
-- `icon` - `satellite`, `rocket`, or `star`
-- `order`
-- `vehicle`
-- `missionWindow`
-- `destination`
-- `coverImage`
+成员名单会自动显示在首页“实验室沿革 / 指导老师”区域。成员数据已经从 `src/data/lab.ts` 独立出来，修改名单不需要改组件。
 
-### 🔭 Reports
+### 改研究方向
 
-Path: `src/content/reports/`
+编辑 [`src/content/missions/`](src/content/missions/) 下的 Markdown 文件。常用字段：
 
-Important frontmatter:
+```yaml
+title: 智能车竞赛
+summary: 方向简介
+status: 进行中
+statusTone: green
+icon: rocket
+order: 1
+vehicle: 车型或平台
+missionWindow: 项目周期
+destination: 项目目标
+```
 
-- `title`
-- `summary`
-- `label`
-- `publishedAt`
-- `image`
-- `spectrumBars` - exactly 12 values from `0` to `100`
-- `rangeStart`
-- `rangeEnd`
-- `highlight`
+`statusTone` 只能使用 `green`、`blue`、`gold`；`icon` 只能使用 `satellite`、`rocket`、`star`。
 
-### 🚀 Departures
+### 改竞赛成果
 
-Path: `src/content/departures/`
+编辑 [`src/content/reports/`](src/content/reports/) 下的 Markdown 文件。`spectrumBars` 必须是 12 个 `0` 到 `100` 的数字：
 
-Important frontmatter:
+```yaml
+title: 竞赛成果标题
+summary: 成果简介
+label: 竞赛成果 / 2026
+publishedAt: 2026-09-18
+image: /images/example.png
+spectrumBars: [20, 35, 48, 62, 55, 70, 64, 58, 46, 38, 30, 24]
+rangeStart: 起点
+rangeEnd: 终点
+highlight: 成果摘要
+```
 
-- `title`
-- `detail`
-- `launchDate`
-- `launchTime` - `HH:mm` or `HH:mm:ss`
-- `image`
-- `launchSite`
-- `missionWindow`
-- `order`
+### 改技术专题
 
-### 📰 News
+编辑 [`src/content/notes/`](src/content/notes/) 下的 Markdown 文件：
 
-Path: `src/content/news/`
+```yaml
+title: 文章标题
+summary: 文章摘要
+topic: 嵌入式
+level: 入门
+publishedAt: 2026-09-18
+keywords: [STM32, C语言]
+order: 1
+```
 
-Important frontmatter:
+正文使用标准 Markdown，支持标题、列表、代码块、引用和链接。
 
-- `title`
-- `summary`
-- `publishedAt`
-- `author`
-- `desk`
-- `image`
+### 改培养体系、设备与技术、关于迅雷
 
-### 📄 Singleton Pages
+编辑 [`src/content/pages/`](src/content/pages/)：
 
-Path: `src/content/pages/`
+- `science.md`：培养体系
+- `technology.md`：设备与技术
+- `about.md`：关于迅雷
 
-Important frontmatter:
+这三个文件包含 `title`、`summary`、`eyebrow`、`highlights` 和正文。培养体系、设备与技术页面使用代码生成的训练路径/电路板特效，不再使用 frontmatter 中的图片；关于迅雷仍可使用 `image`。
 
-- `title`
-- `summary`
-- `eyebrow`
-- `image`
-- `highlights`
+### 改加入我们流程
 
-## Branding
+编辑 [`src/content/departures/`](src/content/departures/) 下的 Markdown 文件。流程顺序由 `order` 控制：
 
-Brand assets live in `public/brand/`:
+```yaml
+title: 公开课
+detail: 流程简介
+launchDate: 2026-10-01
+launchTime: 19:00
+image: /images/example.png
+launchSite: 线上或线下地点
+missionWindow: 报名时间说明
+order: 1
+```
 
-| Asset | Usage |
-| :--- | :--- |
-| `aeon-logo-dark.png` | Light/gold wordmark for dark surfaces |
-| `aeon-logo-light.png` | Navy wordmark for light surfaces |
-| `aeon-symbol-dark.png` | Light/gold symbol for dark surfaces |
-| `aeon-symbol-light.png` | Navy symbol for light surfaces |
+加入我们页面标题旁的纳新群按钮从 `siteSettings` 自动读取。修改链接或按钮文字时，不要改页面模板，直接修改 [`src/data/site.ts`](src/data/site.ts) 中的 `siteSettings`。
 
-`src/components/BrandLogo.tsx` handles logo rendering. It supports:
+### 改实验室动态视频
 
-- `kind="wordmark"` or `kind="symbol"`
-- `tone="theme"` for automatic light/dark switching
-- `tone="dark"` or `tone="light"` for fixed contrast contexts
+实验室动态已经从文章改为视频归档。把视频直接放进 [`public/vdso/`](public/vdso/) 即可自动展示，不需要修改页面代码。
 
-The home hero intentionally uses a fixed logo tone over the sky image so the mark stays readable regardless of the active site theme.
+支持格式：`.mp4`、`.webm`、`.ogg`、`.mov`。
 
-## Theme Customization
+页面会按文件名自然排序，例如 `1.mp4`、`2.mp4`、`10.mp4`。视频文件名会作为卡片标题显示。
 
-Theme tokens are defined in `src/styles/global.css` under `@theme` and theme-specific CSS variables.
+## 怎么改外观
 
-Primary tokens include:
+### 修改颜色、字体和主题
 
-- `--color-page-bg`
-- `--color-dark-space`
-- `--color-page-cream`
-- `--color-navy-text`
-- `--color-accent-blue`
-- `--color-warm-gold`
-- `--font-display`
-- `--font-body`
+编辑 [`src/styles/global.css`](src/styles/global.css)：
 
-To rebrand the template, start with:
+- `@theme`：基础颜色、字体和 Tailwind 主题名
+- `html[data-theme='dark']`：深色主题变量
+- `html[data-theme='light']`：浅色主题变量
+- `.lab-hero`：首页代码流 Hero
+- `.training-effect`：培养体系特效
+- `.engineering-effect`：设备与技术特效
+- `.video-card`：视频卡片
 
-1. `public/brand/` for logos and symbols
-2. `src/styles/global.css` for colors, typography, and theme overrides
-3. `src/data/site.ts` for navigation, hero copy, stats, and footer metadata
-4. `src/content/` for missions, reports, news, departures, and singleton pages
+### 修改 Logo
 
-## Image Customization
+页面 Logo 组件是 [`src/components/BrandLogo.tsx`](src/components/BrandLogo.tsx)。当前 Logo 图形使用 [`public/favicon.ico`](public/favicon.ico)，中文和英文品牌文字也在该组件中修改。
 
-Static images are served from `public/images/`.
+### 修改首页 Hero
 
-To replace visuals:
+首页 Hero 组件是 [`src/components/HeroShell.tsx`](src/components/HeroShell.tsx)：
 
-1. Add new images to `public/images/`
-2. Update the relevant `image` or `coverImage` frontmatter values in `src/content/`
-3. Replace the hero background at `public/images/top_hero_image.png` or update the path in `src/components/HeroShell.tsx`
+- `codeLines`：背景代码内容
+- `useProbeLayer`：鼠标局部聚焦坐标
+- Hero 导航、按钮和页面主标题结构
 
-## ⭐ Support
+背景代码的滚动、闪烁、呼吸和扫描线样式在 `src/styles/global.css` 中。
 
-If AEON / SPACE helps you build faster or inspires your next project, consider starring the repository.
+## 内容字段校验
+
+所有 Markdown 字段规则集中在 [`src/content.config.ts`](src/content.config.ts)。如果 frontmatter 缺字段、类型不正确或枚举值不合法，`npm run check` 会报错。
+
+## 部署
+
+默认 `npm run build` 生成静态站点到 `dist/`，适合部署到支持静态文件托管的平台。
+
+项目也保留 Vercel 和 Cloudflare 的脚本入口。部署前先执行：
+
+```bash
+npm run check
+npm run build
+```
+

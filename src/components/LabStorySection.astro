@@ -1,5 +1,6 @@
 ---
-import { labFacilities, labMentors, labTimeline } from '../data/lab';
+import { labFacilities, labTimeline } from '../data/lab';
+import { labMembers } from '../data/members';
 ---
 
 <section id="story" class="lab-ground">
@@ -40,7 +41,7 @@ import { labFacilities, labMentors, labTimeline } from '../data/lab';
           带我们从第一块电路板走到国赛。
         </h3>
         <dl class="mt-8 border-t border-lab-line">
-          {labMentors.map((mentor) => (
+          {labMembers.map((mentor) => (
             <div class="border-b border-lab-line py-5">
               <dt class="flex flex-wrap items-baseline gap-3">
                 <span class="font-display text-[1.25rem] tracking-[-0.02em] text-lab-ink">{mentor.name}</span>
@@ -50,7 +51,7 @@ import { labFacilities, labMentors, labTimeline } from '../data/lab';
             </div>
           ))}
         </dl>
-        <p class="mt-5 font-mono text-[10px] leading-6 text-lab-ink/45">成员名单与分工待补充。</p>
+        <p class="mt-5 font-mono text-[10px] leading-6 text-lab-ink/45">名单和分工信息可在成员配置文件中维护。</p>
       </div>
 
       <div>

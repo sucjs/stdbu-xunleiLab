@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" fill="none">
+  <rect width="1600" height="1000" fill="#0A0C0D"/>
+  <g opacity=".24" stroke="#E5E1D8" stroke-width="1">
+    <path d="M0 130H1600M0 260H1600M0 390H1600M0 520H1600M0 650H1600M0 780H1600M0 910H1600"/>
+    <path d="M130 0V1000M260 0V1000M390 0V1000M520 0V1000M650 0V1000M780 0V1000M910 0V1000M1040 0V1000M1170 0V1000M1300 0V1000M1430 0V1000"/>
+  </g>
+  <g opacity=".55" stroke="#C9523C" stroke-width="3">
+    <path d="M80 740H260V620H430V700H610V470H770V560H920V330H1090V410H1260V210H1510"/>
+    <path d="M80 780H320V840H540V760H720V880H980V720H1190V810H1510"/>
+  </g>
+  <g stroke="#E5E1D8" stroke-width="2" opacity=".78">
+    <rect x="410" y="280" width="780" height="300" rx="12"/>
+    <rect x="520" y="350" width="560" height="150" rx="6"/>
+    <path d="M470 300V220M1130 300V220M470 220H1130"/>
+    <path d="M490 580L430 690M1110 580L1170 690"/>
+    <circle cx="550" cy="640" r="72"/>
+    <circle cx="1050" cy="640" r="72"/>
+    <circle cx="550" cy="640" r="30"/>
+    <circle cx="1050" cy="640" r="30"/>
+    <path d="M620 640H980M700 350V500M900 350V500"/>
+  </g>
+  <g fill="#C9523C">
+    <circle cx="470" cy="220" r="7"/><circle cx="1130" cy="220" r="7"/><circle cx="430" cy="690" r="7"/><circle cx="1170" cy="690" r="7"/>
+  </g>
+  <g fill="#E5E1D8" font-family="monospace" font-size="22" letter-spacing="3" opacity=".76">
+    <text x="80" y="90">THUNDER LAB / ENGINEERING ARCHIVE</text>
+    <text x="80" y="950">SAMPLE 026 · CONTROL SYSTEM / ACTIVE</text>
+    <text x="1250" y="90">SDTBU · 2026</text>
+  </g>
+  <g stroke="#C9523C" stroke-width="2" opacity=".9">
+    <path d="M80 110H460"/><path d="M1250 110H1510"/>
+  </g>
+</svg>

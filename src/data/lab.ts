@@ -5,12 +5,6 @@ export interface TimelineItem {
   verified: boolean;
 }
 
-export interface MentorItem {
-  name: string;
-  role: string;
-  note: string;
-}
-
 export interface FacilityItem {
   label: string;
   value: string;
@@ -66,20 +60,8 @@ export const labTimeline: TimelineItem[] = [
   },
 ];
 
-export const labMentors: MentorItem[] = [
-  
-  {
-    name: '高群',
-    role: '迅雷实验室 / 迅雷队指导老师',
-    note: '长期负责智能车队伍训练与赛事组织，多篇竞赛成果报道作者。',
-  },
-  
- 
-];
-
 export const labFacilities: FacilityItem[] = [
   { label: '实验室位置', value: '西校区实验楼 5401' },
-  { label: '同层空间', value: '深蓝实验室（5409）、电子实验室（5404）' },
   { label: '加工设备', value: '3D 打印机、CNC 雕刻机' },
   { label: '焊接工具', value: '恒温焊台、热风枪、烙铁' },
   { label: '测试仪器', value: '示波器、直流电源、常用测量仪表' },

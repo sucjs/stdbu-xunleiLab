@@ -2,7 +2,7 @@
 title: 关于迅雷实验室
 summary: 迅雷实验室是山东工商学院信息与电子工程学院的学生科创开放实验室，房间为西校区实验楼 5401，专注智能控制与电子系统开发。
 eyebrow: 实验室介绍
-image: /images/lab-hero.svg
+image: /images/2.jpg
 highlights:
   - label: 所属单位
     value: 山东工商学院信息与电子工程学院
